@@ -1,0 +1,14 @@
+{
+   "chaincodeID":"mplbank",
+   "channelID":"labchannel",
+   "chaincodeVersion":"1",
+   "keyValueStore":"/tmp/fabric-client-kvs",
+   "mspid":"BlockchainCoCMSP",
+   "peers":[
+      {
+         "peer_url":"grpc://localhost:7051",
+         "event_url":"grpc://localhost:7053"
+      }
+   ]
+
+}
