@@ -9,6 +9,7 @@
 
   "dependencies": {
     "async": "0.9.*",
+    "body-parser": "~1.17.1",
     "compression": "1.6.*",
     "cookie-parser": "1.4.*",
     "cors": "2.8.*",
@@ -37,5 +38,6 @@
   },
   "author": {
     "name": "Anthony Roux"
-  }
+  },
+  "license": "Apache-2.0"
 }
