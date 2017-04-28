@@ -21,7 +21,7 @@ var User = require('fabric-client/lib/User.js');
 
 
 
-var config = require('./config.json');
+var config = require('./config/config.json');
 
 var allEventhubs = [];
 
@@ -57,21 +57,6 @@ app.use(function(request, response, next) {
 });
 
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/web/index.html'));
-});
-
-app.get('/action.html', function(req, res) {
-    res.sendFile(path.join(__dirname + '/web/action.html'));
-});
-
-app.get('/script.js', function(req, res) {
-    res.sendFile(path.join(__dirname + '/web/script.js'));
-});
-
-app.get('/script2.js', function(req, res) {
-    res.sendFile(path.join(__dirname + '/web/script2.js'));
-});
 
 app.post('/login', function(req, res) {
     //console.log(req.body);
@@ -351,12 +336,10 @@ app.post('/invoke', function(req,res) {
 });
 
 
-
-
 var server = app.listen(3000, "localhost",function () {
 
-	  var host = server.address().address
-	  var port = server.address().port
+	  var host = server.address().address;
+	  var port = server.address().port;
 	  console.log("Example app listening at http://%s:%s", host, port)
 
 });
