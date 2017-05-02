@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"errors"
-	"strconv"
 	"strings"
 
 	"github.com/hyperledger/fabric/core/chaincode/shim"
@@ -16,8 +15,8 @@ type SimpleChaincode struct {
 }
 
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	if len(args) != 1 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 1")
+	if len(args) != 2 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 2")
 	}
 
 	err := stub.PutState("hello_world", []byte(args[0]))
@@ -30,7 +29,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 
 func (t *SimpleChaincode) invoke(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	if len(args) != 1 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 1")
+		return errors.New("Incorrect number of arguments. Expecting 1")
 	}
 
 	return shim.Success(nil)
