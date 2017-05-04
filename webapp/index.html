@@ -1,0 +1,3186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <!-- Contact: Andreas Kind @IBM, 2016 -->
+  <head>
+    <title>Mortgage Demo</title>
+    <style>
+
+.accessinfo {
+    z-index: 2000;
+    position: absolute;
+    display: none;
+    cursor: pointer;
+    background: white;
+    float: left;
+    color: grey;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+    border: 1px solid grey;
+    font-size: 10px;
+    padding: 5px;
+    test-align: right;
+}
+.form-style{
+    max-width: 800px;
+    background: #FAFAFA;
+    padding: 10px;
+    margin: 20px auto;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+    border-radius: 10px;
+    border: 4px solid #305A72;
+    text-align: left;
+    font-size: 20px;
+    color: dimgrey;
+}
+.form-style ul{
+    padding:0;
+    margin-top:7px;
+    list-style:none;
+}
+.form-style ul li{
+    display: block;
+    margin-bottom: 5px;
+    min-height: 30px;
+}
+.form-style ul li  .field-style{
+    box-sizing: border-box; 
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box; 
+    padding: 8px;
+    outline: none;jas
+    border: 1px solid #B0CFE0;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+}
+.form-style ul li  .field-style:focus{
+    box-shadow: 0 0 5px #B0CFE0;
+    border:1px solid #B0CFE0;
+}
+.form-style ul li .field-split{
+    width: 49%;
+}
+.form-style ul li .field-split-10{
+    width: 9%;
+}
+.form-style ul li .field-split-16{
+    width: 16%;
+}
+.form-style ul li .field-split-20{
+    width: 19%;
+}
+.form-style ul li .field-split-25{
+    width: 25%;
+}
+.form-style ul li .field-split-30{
+    width: 33.33%;
+}
+.form-style ul li .field-split-60{
+    width: 69%;
+}
+.form-style ul li .field-split-80{
+    width: 79%;
+}
+.form-style ul li .field-split-90{
+    width: 89%;
+}
+.form-style ul li .field-full{
+    width: 100%;
+}
+.form-style ul li input.align-left{
+    float:left;
+}
+.form-style ul li input.align-right{
+    float:right;
+}
+.form-style ul li textarea{
+    width: 100%;
+    height: 100px;
+}
+.form-style ul li input[type="button"] {
+    -moz-box-shadow: inset 0px 1px 0px 0px #3985B1;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #3985B1;
+    box-shadow: inset 0px 1px 0px 0px #3985B1;
+    background-color: #216288;
+    border: 1px solid grey;
+    display: inline-block;
+    cursor: pointer;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 12px;
+    text-align: center;
+    width: 60px;
+    height: 20px;
+}
+.form-style ul li input[type="button"]:hover {
+    background: linear-gradient(to bottom, #2D77A2 5%, #337DA8 100%);
+    background-color: #28739E;
+}
+.doc-title {
+    padding: 10px;
+    display: inline-block;
+}
+.doc-input-label{
+    font-size: 10px;
+    display: inline-block;
+    word-wrap: break-word;
+    word-break: normal;
+}
+.doc-input-label-bold{
+    font-size: 10px;
+    font-weight: bold;
+    display: inline-block;
+    word-wrap: break-word;
+    word-break: normal;
+}
+.doc-input-label-split-50{
+    width: 49%;
+}
+.doc-input-label-split-30{
+    width: 32%;
+}
+.doc-input-label-split-10{
+    width: 10%;
+}
+table {
+    width:100%;
+    table-layout:fixed;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    width:14%;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-aligh:center;
+}
+.main-label-bold{
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+}
+a.button_right {
+    padding: 0px 0px;
+    float: right;
+    display: block;
+}
+a.button_left {
+    padding: 0px 0px;
+    float: left;
+    display: block;
+}
+a.button:hover {
+    margin-top: 1px;
+    filter: opacity(50%);
+}
+a.button:active {
+    margin-top: 2px;
+}
+a.button.icon {
+    padding-left: 0px;
+}
+a.button.icon.settings span{
+    padding-left: 40px;
+    padding-bottom: 20px;
+    background: url(images/settings.png) no-repeat 0 -4px;
+    background-position: 0px 1px;
+}
+a.button.icon.account span{
+    padding-left: 40px;
+    padding-bottom: 20px;
+    background: url(images/account.png) no-repeat 0 -4px;
+    background-position: 0px 0px;
+}
+a.button.icon.menu span{
+    padding-left: 40px;
+    padding-bottom: 20px;
+    background: url(images/menu.png) no-repeat 0 -4px;
+    background-position: 10px 0px;
+}
+a.button.icon.expand span{
+    padding-left: 40px;
+    padding-bottom: 20px;
+    background: url(images/expand.png) no-repeat 0 -4px;
+    background-position: 10px 0px;
+}
+a.button.icon.collapse span{
+    padding-left: 40px;
+    padding-bottom: 20px;
+    background: url(images/arrow_right.png) no-repeat 0 -4px;
+    background-position: 14px -5px;
+}
+a.button.docaccess span{
+    padding-left: 2px;
+    padding-bottom: 1px;
+    background-position: 14px -5px;
+    font-weight: bold;
+    text-align: center;
+}
+a.button.docaccess2 span{
+    padding-left: 2px;
+    padding-bottom: 1px;
+    border-style: solid;
+    border-radius: 30%;
+    border-width: 2px;
+    border-color: white black green red;
+    background-position: 14px -5px;
+    font-family: Courier New, Courier, monospace;
+    text-align: center;
+}
+.node {
+    background: lightgray;
+    cursor: pointer;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.35);
+    margin: 0;
+    padding: 4px;
+    border-radius: 20%;
+    position: absolute;
+    font-size: 8pt;
+    color: black;
+    overflow: hidden;
+    text-align: center;
+    transition: all 0.3s;
+     -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.line { 
+    height: 4px;
+    background: darkgrey;
+    border-radius: 20%;
+    border-width: 0px;
+    position: absolute;
+    overflow: hidden;
+    text-align: center;
+    transition: all 0s;
+    box-shadow: 0px 0px 2px darkgrey;
+}
+.node:active {
+    filter: invert(100%);
+}
+.node:hover {
+   background: #505050;
+   color: white;
+}
+.main {
+    width: 100%;
+    left: 20px; top: 20px;
+    text-align: center;
+    min-width: 500px;
+    font-family: Verdana, Geneva, sans-serif;
+}
+.header {
+    position: relative;
+    background: #305A72;
+    margin-bottom: 10px;
+    height: 35px;
+    font-size: 25px;
+    text-align: center;
+    color: white;
+}
+.process {
+    background: #FAFAFA;
+    max-width: 800px;
+    padding: 10px;
+    margin: 20px auto;
+    position: relative;
+    height: 350px;
+    border-radius: 10px;
+    border: 4px solid #305A72;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+    text-align: left;
+    font-size: 20px;
+    color: dimgrey;
+}
+.consoles {
+    position: relative;
+    display: none;
+}
+.console {
+    background: black;
+    max-width: 800px;
+    padding: 10px;
+    margin: 20px auto;
+    position: relative;
+    height: 500px;
+    border-radius: 10px;
+    border: 4px solid #305A72;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+    text-align: left;
+    font-family: Courier New, Courier, monospace;
+    font-size: 10px;
+    color: white;
+    overflow: auto;
+}
+.auditing {
+    position: relative;
+    display: none;
+}
+.auditlogs {
+    background: black;
+    max-width: 800px;
+    padding: 10px;
+    margin: 20px auto;
+    position: relative;
+    height: 500px;
+    border-radius: 10px;
+    border: 4px solid #305A72;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+    text-align: left;
+    font-family: Courier New, Courier, monospace;
+    font-size: 10px;
+    color: white;
+    overflow: auto;
+}
+.doc {
+    position: relative;
+    display: none;
+}
+.footer {
+    font-size: 14px;
+    color: dimgrey;
+    text-align: center;
+}
+.mainmenu {
+    z-index: 2000;
+    position: absolute;
+    display: none;
+    cursor: pointer;
+}
+.mainaccount {
+    z-index: 2000;
+    position: absolute;
+    display: none;
+    cursor: pointer;
+}
+.dropdownitem:hover {
+    color: lightgrey;
+}
+.dropdownitem {
+    background: #4b545f;
+    position: relative;
+    width: 120px;
+    height: 15px;
+    padding: 5px;
+    text-align: left;
+    border-top: 1px solid #6b727c;
+    border-bottom: 1px solid #575f6a; position: relative;
+    color: white;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.35);
+    font-size: 12px;
+}
+.alert {
+    z-index: 2000;
+    display: none;
+    cursor: pointer;
+    margin-left: -150px;
+    margin-top: -150px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+}
+.alertMsg {
+    background: #4b545f;
+    position: relative;
+    padding: 5px;
+    text-align: center;
+    border-top: 1px solid #6b727c;
+    border-bottom: 1px solid #575f6a;
+    color: yellow;
+    box-shadow: 15px 15px 10px rgba(0, 0, 0, 0.35);
+    font-size: 12px;
+    border-radius: 5px;
+}
+.username{
+    font-size: 10px;
+    font-weight: bold;
+    float: right;
+    color: white;
+}
+.headertitle{
+    font-size: 25px;
+    font-weight: bold;
+    float: left;
+    width: 500px;
+    text-align: center;
+    display: inline-block;
+    color: white;
+}
+
+    </style>
+    <!-- <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
+    <script src="./jquery-2.2.0.min.js"></script>
+    
+    <script type="text/javascript">
+      
+// Hyperledger backend
+var server = "http://localhost:7000";
+
+// Hyperledger credentials
+var obcUser = 'test_user4';
+
+//var chaincodeName = "af4f59633a991a2a10c90e1b159bcb2d0e0fc4a13a0ae975cae5331cb18dc9c3e092d1c02498a3eeb362e056a9680da0a930e45b9bd508613ad5e4ab0638bd28";
+var chaincodeName = "mortgage";
+//var chaincodeName = "acca8577fd288b9e074881a4af7ebb42e4c85a7be65906bfa4b471246d9b9644b99236be9bd308bca9b38fe6836a1098bdc6338c13eab152a723681594ffd9ab";
+
+var gridUnit = 80.0;
+var nodeWidth = 55;
+
+var longName = { "L" : "Lender",
+         "B" : "Borrower",
+         "S" : "Seller",
+         "A" : "Appraiser",
+         "N" : "Notary"
+           };
+var token;
+var state;
+
+// Use this state when no Hyperledger connection is available
+var stateOffline = {
+    "mortgageDocs": {
+        "myDocProperty": {
+            "name": "myDocProperty",
+            "status": "open",
+            "signatures": {},
+            "form": {},
+            "access": {
+                "L": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": ""
+                },
+                "B": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": ""
+                },
+                "S": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": "OK"
+                },
+                "A": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                },
+                "N": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                }
+            }
+        },
+        "myDocBorrower": {
+            "name": "myDocBorrower",
+            "status": "open",
+            "signatures": {},
+            "form": {},
+            "access": {
+                "L": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": ""
+                },
+                "B": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": "OK"
+                },
+                "S": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                },
+                "A": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                },
+                "N": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                }
+            }
+        },
+        "myDocEmployment": {
+            "name": "myDocEmployment",
+            "status": "open",
+            "signatures": {},
+            "form": {},
+            "access": {
+                "L": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": ""
+                },
+                "B": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": "OK"
+                },
+                "S": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "A": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "N": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                }
+            }
+        },
+            "myDocMonthlyIncomeHousingExpense": {
+            "name": "myDocMonthlyIncomeHousingExpense",
+            "status": "open",
+            "signatures": {},
+            "form": {},
+            "access": {
+                "L": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": ""
+                },
+                "B": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": "OK"
+                },
+                "S": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "A": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "N": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                }
+            }
+        },
+        "myDocAssetsLiabilities": {
+            "name": "myDocAssetsLiabilities",
+            "status": "open",
+            "signatures": {},
+            "form": {},
+            "access": {
+                "L": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": ""
+                },
+                "B": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": "OK"
+                },
+                "S": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "A": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "N": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                }
+            }
+        },
+        "myDocMortgageType": {
+            "name": "myDocMortgageType",
+            "status": "open",
+            "signatures": {},
+            "form": {},
+            "access": {
+                "L": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": ""
+                },
+                "B": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": "OK"
+                },
+                "S": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "A": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "N": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                }
+            }
+        },
+        "myDocMortgagePurpose": {
+            "name": "myDocMortgagePurpose",
+        "status": "open",
+            "signatures": {},
+            "form": {},
+            "access": {
+                "L": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                },
+                "B": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": "OK"
+                },
+                "S": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "A": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "N": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                }
+            }
+        },
+        "myDocDetailsOfTransaction": {
+            "name": "myDocDetailsOfTransaction",
+            "status": "open",
+            "signatures": {},
+            "form": {},
+            "access": {
+                "L": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": ""
+                },
+                "B": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": "OK"
+                },
+                "S": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "A": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "N": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                }
+            }
+        },
+        "myDocForGovMonitoring": {
+            "name": "myDocForGovMonitoring",
+            "status": "open",
+            "signatures": {},
+            "form": {},
+            "access": {
+                "L": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": "OK"
+                },
+                "B": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": "OK"
+                },
+                "S": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "A": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "N": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                }
+            }
+        },
+            "myDocAcknowledgementAgreement": {
+            "name": "myDocAcknowledgementAgreement",
+            "status": "open",
+            "signatures": {},
+            "form": {},
+            "access": {
+                "L": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                },
+                "B": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": "OK"
+                },
+                "S": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "A": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "N": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                }
+            }
+        },
+        "myDocPurchaseContract": {
+            "name": "myDocPurchaseContract",
+            "status": "open",
+            "signatures": {},
+            "form": {},
+            "access": {
+                "L": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                },
+                "B": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": "OK"
+                },
+                "S": {
+                    "read": "OK",
+                    "save": "OK",
+                    "sign": "OK"
+                },
+                "A": {
+                    "read": "",
+                    "save": "",
+                    "sign": ""
+                },
+                "N": {
+                    "read": "OK",
+                    "save": "",
+                    "sign": ""
+                }
+            }
+        }
+    },
+    "mortgageProcesses": {
+        "mortgageOrigination": {
+            "nodes": [{
+                "id": "node0",
+                "name": "Borrower Information",
+                "status": "open",
+                "next": "node3",
+                "prev": [],
+                "gridx": 1,
+                "gridy": 0,
+                "docs": ["myDocBorrower","myDocEmployment","myDocMonthlyIncomeHousingExpense","myDocAssetsLiabilities"]
+            }, {
+                "id": "node1",
+                "name": "Property Information",
+                "status": "open",
+                "next": "node2",
+                "prev": [],
+                "gridx": 0,
+                "gridy": 1,
+                "docs": ["myDocProperty"]
+            }, {
+                "id": "node2",
+                "name": "Purchase Contract Information",
+                "status": "closed",
+                "next": "node3",
+                "prev": ["node1"],
+                "gridx": 1,
+                "gridy": 1,
+                "docs": ["myDocPurchaseContract"]
+            }, {
+                "id": "node3",
+                "name": "Mortgage Application",
+                "status": "closed",
+                "next": "node4",
+                "prev": ["node0", "node2"],
+                "gridx": 2,
+                "gridy": 1,
+                "docs": ["myDocMortgageType","myDocMortgagePurpose","myDocDetailsOfTransaction","myDocForGovMonitoring","myDocAcknowledgementAgreement"]
+            }, {
+                "id": "node4",
+                "name": "Good Faith Estimate",
+                "status": "closed",
+                "next": "node5",
+                "prev": ["node3"],
+                "gridx": 3,
+                "gridy": 1,
+                "docs": []
+            }, {
+                "id": "node5",
+                "name": "Truth in Lending Statement",
+                "status": "closed",
+                "next": "node6",
+                "prev": ["node4"],
+                "gridx": 4,
+                "gridy": 1,
+                "docs": []
+            }, {
+                "id": "node6",
+                "name": "Borrower Verification",
+                "status": "closed",
+                "next": "node7",
+                "prev": ["node5"],
+                "gridx": 5,
+                "gridy": 1,
+                "docs": []
+            }, {
+                "id": "node7",
+                "name": "Purchase Contract Verification",
+                "status": "closed",
+                "next": "node8",
+                "prev": ["node6"],
+                "gridx": 6,
+                "gridy": 1,
+                "docs": []
+            }, {
+                "id": "node8",
+                "name": "Employment Verification",
+                "status": "closed",
+                "next": "node9",
+                "prev": ["node7"],
+                "gridx": 6,
+                "gridy": 2,
+                "docs": []
+            }, {
+                "id": "node9",
+                "name": "Rent Verification",
+                "status": "closed",
+                "next": "node10",
+                "prev": ["node8"],
+                "gridx": 5,
+                "gridy": 2,
+                "docs": []
+            }, {
+                "id": "node10",
+                "name": "Desktop Underwriter / Loan Prospector Program",
+                "status": "closed",
+                "next": "node11",
+                "prev": ["node9"],
+                "gridx": 4,
+                "gridy": 2,
+                "docs": []
+            }, {
+                "id": "node11",
+                "name": "Title Order, Home Insurance",
+                "status": "closed",
+                "next": "node12",
+                "prev": ["node10"],
+                "gridx": 3,
+                "gridy": 2,
+                "docs": []
+            }, {
+                "id": "node12",
+                "name": "Home Appraisal",
+                "status": "closed",
+                "next": "node13",
+                "prev": ["node11"],
+                "gridx": 2,
+                "gridy": 2,
+                "docs": []
+            }, {
+                "id": "node13",
+                "name": "Mortgage Contract",
+                "status": "closed",
+                "next": "",
+                "prev": ["node12"],
+                "gridx": 1,
+                "gridy": 2,
+                "docs": []
+            }],
+            "edges": [
+                [{
+                    "gridx": 1.0,
+                    "gridy": 0.0
+                }, {
+                    "gridx": 1.5,
+                    "gridy": 0.0
+                }, {
+                    "gridx": 2.0,
+                    "gridy": 0.5
+                }, {
+                    "gridx": 2.0,
+                    "gridy": 1.0
+                }],
+                [{
+                    "gridx": 0.0,
+                    "gridy": 1.0
+                }, {
+                    "gridx": 1.0,
+                    "gridy": 1.0
+                }, {
+                    "gridx": 2.0,
+                    "gridy": 1.0
+                }, {
+                    "gridx": 3.0,
+                    "gridy": 1.0
+                }, {
+                    "gridx": 4.0,
+                    "gridy": 1.0
+                }, {
+                    "gridx": 5.0,
+                    "gridy": 1.0
+                }, {
+                    "gridx": 6.0,
+                    "gridy": 1.0
+                }],
+                [{
+                    "gridx": 6.0,
+                    "gridy": 1.5
+                }, {
+                    "gridx": 6.0,
+                    "gridy": 2.0
+                }],
+                [{
+                    "gridx": 1.0,
+                    "gridy": 2.0
+                }, {
+                    "gridx": 2.0,
+                    "gridy": 2.0
+                }, {
+                    "gridx": 3.0,
+                    "gridy": 2.0
+                }, {
+                    "gridx": 4.0,
+                    "gridy": 2.0
+                }, {
+                    "gridx": 5.0,
+                    "gridy": 2.0
+                }, {
+                    "gridx": 6.0,
+                    "gridy": 2.0
+                }]
+            ],
+            "auditing": {
+                "auditLogs": ""
+        }
+        }
+    },
+    "rootHash": ""
+};
+
+// Dummy state for debugging
+var stateOffline0 = {
+    "mortgageDocs": {},
+    "mortgageProcesses": {
+        "mortgageOrigination": {
+        "nodes": [
+        { "id": "node15", "name": "Mortgage Contract", "status": "open",
+          "gridx": 1, "gridy": 0, "docs": [] }
+        ],
+        "edges": [
+        ]
+    }
+    },
+    "rootHash": ""
+};
+
+function addPathDiv(gridx1, gridy1, gridx2, gridy2) {
+    var x1 = (gridx1 * gridUnit) + gridUnit/2;
+    var y1 = (gridy1 * gridUnit) + gridUnit/2;
+    var x2 = (gridx2 * gridUnit) + gridUnit/2;
+    var y2 = (gridy2 * gridUnit) + gridUnit/2;
+    
+    var rot;
+    var len;
+    if (x1 == x2) {
+    // Down/up
+    len = gridUnit;
+    rot = 90;
+    x1 = (gridx1 * gridUnit) + 10;
+    y1 += 10;
+    } else if (y1 == y2) {
+    // Left/right
+    len = gridUnit;
+    rot = 0;
+    } else {
+    // Turn
+    len = Math.sqrt(2) * gridUnit/2 - 14;
+    rot = 45;
+    if ((x1 > y2 && y1 > y2) || (x1 < y2 && y1 < y2)) {
+        rot *= -1;
+    }
+    x1 += 13.5;
+    y1 += 11;
+    //x1 = (gridx1 * gridUnit);
+    //y1 = (gridy1 * gridUnit);
+    }
+
+    var div = document.createElement("div");
+    div.className = "line";
+    div.style.width = len + "px";
+    div.style.transform =
+        "translate(" + x1 + "pt," + y1 + "pt) " +
+        "rotate(" + rot + "deg)";
+
+    document.getElementById("myProcess").appendChild(div);
+                             
+}
+function generateNodeDiv(spec, index, array) {
+    var x = (spec.gridx * gridUnit) + gridUnit/2 - nodeWidth/2;
+    var y = (spec.gridy * gridUnit) + gridUnit/2 - nodeWidth/2;
+    
+    var div = document.createElement("div");
+    div.className = "node";
+    div.id = spec.id;
+    div.docs = spec.docs;
+    div.innerHTML = spec.name;
+    div.style.width = nodeWidth + "pt";
+    div.style.height = nodeWidth + "pt";
+    if (spec.status == "open") {
+    div.style.fontWeight = "bold";
+    //div.style.backgroundColor = "#505050";
+    div.style.borderColor = "black";
+    } else if (spec.status == "signed") {
+    div.style.fontWeight = "bold";
+    //div.style.color = "green";
+    div.style.borderColor = "green";
+    } else {
+    div.style.borderColor = "white";
+    }
+    div.style.transform =
+    "translate(" + x + "pt," + y + "pt)";
+
+    document.getElementById("myProcess").appendChild(div);
+    registerNodeControls(div.id);
+}
+var edgeStart;
+function generatePathDiv(spec, index, array) {
+    if (edgeStart == undefined) {
+    edgeStart = spec;
+    } else {
+    var gridx1 = edgeStart.gridx;
+    var gridy1 = edgeStart.gridy;
+    var gridx2 = spec.gridx;
+    var gridy2 = spec.gridy;
+    addPathDiv(gridx1, gridy1, gridx2, gridy2);
+    edgeStart = spec;
+    }
+}
+
+function generateEdgeDiv(spec, index, array) {
+    spec.forEach(generatePathDiv);
+    edgeStart = undefined;
+}
+
+function generateProcessDiv(spec) {
+    //console.log("generateProcessDiv: " + JSON.stringify(spec) + " ");
+    var nodes = spec.nodes;
+    var edges = spec.edges;
+    
+    $("#myProcess").find('.node').remove();
+    $("#myProcess").find('.line').remove();
+    spec.edges.forEach(generateEdgeDiv);
+    spec.nodes.forEach(generateNodeDiv);
+}
+
+function randString() {
+    return Math.random().toString(36).substr(2); // Remove zeros
+}
+function generateToken() {
+    return randString() + randString();
+}
+function getDocumentSpec(doc) {
+    var fields = $(doc).find("input");
+    var name = doc.attr('id');
+    var spec = { "name": name, "form": { } };
+    fields.each(function(index, field) {
+    var fieldName = field.name;
+    var val = field.value;
+    console.log("  Field " + fieldName + ": " + val);
+    spec.form[fieldName] = val;
+    });
+    //console.log('Spec "' + name + '": ' + JSON.stringify(spec));
+    return spec;
+}
+
+function docFields(docId) {
+    var fields = {};
+    var inputs = $("#" + docId).find("input");
+    inputs.each(function(index, input) {
+    var inputId = input.name;
+    var val = input.value;
+    if (val != undefined && val != "" && input.type != "button") {
+        // Ignore buttons
+        if (input.type == "radio") {
+        // Only checked radio values
+        if (input.checked) {
+            fields[inputId] = val;
+        }
+        } else {
+        fields[inputId] = val;
+        }
+    }
+    });
+    return fields;
+}
+
+// function myAuditLog(prefix, str) {
+//     //var now = $.now();
+//     var date = new Date();
+//     var now = date.toString('yyyy-MM-dd hh:mm:ss'); 
+//     var color = "yellow";
+//     if (prefix == "SIGN") {
+//  color = "green";
+//     } else if (prefix == "REVOKE") {
+//  color = "red"
+//     } else if (prefix == "SAVE") {
+//  color = "yellow"
+//     } else if (prefix == "INFO") {
+//  color = "orange"
+//     } else {
+//  color = "darkgrey"
+//     }
+//     $("#myConsole").append("<pre><b style=\"color:" + color + "\">" + now + " [" + prefix + "]:</b> " + str + "</pre>");
+// }
+
+function myConsole(prefix, str) {
+    //var now = $.now();
+    var date = new Date();
+    var now = date.toString('yyyy-MM-dd hh:mm:ss'); 
+    var color = "yellow";
+    if (prefix == "INFO") {
+    color = "green";
+    } else if (prefix == "ERROR") {
+    color = "red"
+    } else if (prefix == "REQUEST") {
+    color = "yellow"
+    } else if (prefix == "RESPONSE") {
+    color = "orange"
+    } else {
+    color = "white"
+    }
+    $("#myConsole").append("<pre><b style=\"color:" + color + "\">" + now + " [" + prefix + "]:</b> " + str + "</pre>");
+}
+
+function myConsoleJson(prefix, json) {
+    myConsole(prefix, "<br>" + JSON.stringify(json, undefined, 4));
+}
+
+function showAlert(msg) {
+    $("#myAlertMsg").html(msg);
+    $("#myAlert").show();
+    // Hide menu after 4s
+    setTimeout(function() {
+    $("#myAlert").hide()
+    }, 4000);
+}
+
+function deployChaincode () {
+    var data = {
+    "jsonrpc": "2.0",
+    "method": "deploy",
+    "params": {
+       "type": 1,
+       "chaincodeID":{ "path":"mortgage"  },
+       "ctorMsg": {
+          "function":"init",
+          "args":[]
+       },
+       "secureContext": obcUser
+    },
+    "id" : 123
+    };
+    myConsoleJson("REQUEST", data);
+    var query = $.post(server + "/chaincode", JSON.stringify(data));
+
+
+    query.success(function(res, status){
+                myConsoleJson("RESPONSE", res);
+                //chaincodeName = res.result.message;
+                showAlert("Chaincode deployed !");
+                getState();
+    });
+    query.error(function(xhr, status, err){
+    if (xhr && xhr.responseText && xhr.responseText) {
+        json = jQuery.parseJSON(xhr.responseText);
+        if (json.Error) {
+        myConsole("ERROR", json.Error);
+        } else {
+        myConsole("ERROR", xhr.responseText);
+        }
+        showAlert("Lost3 connection to Hyperledger blockchain service!");
+    }
+    getState();
+    });
+}
+
+function getState () {
+    var data = {
+    "jsonrpc": "2.0",
+    "method": "query",
+    "params": {
+       "type": 1,
+       "chaincodeID":{ "name": chaincodeName  },
+       "ctorMsg": {
+          "function":"query",
+          "args":[ token ]
+       },
+       "secureContext": obcUser
+    },
+    "id": 123
+    };
+
+    myConsoleJson("REQUEST", data);
+    var query = $.post(server + "/chaincode", JSON.stringify(data));
+    
+    query.success(   function(res, status){
+    
+	myConsoleJson("RESPONSE", res);
+   
+	state=$.parseJSON(res.message);
+	
+  //  console.log("v2" + res.result.status);
+//    console.log("v2" + r.mortgageProcesses.mortgageOrigination));
+  //  console.log("STATE: " + JSON.stringify(res));
+  
+	if (res  && res.status=="ok" && state.mortgageProcesses && state.mortgageProcesses.mortgageOrigination) {
+	    console.log("STATE: " + JSON.stringify(res.OK));
+	} else {
+	    state = stateOffline;
+	}
+	docs = state.mortgageDocs;
+	process = state.mortgageProcesses.mortgageOrigination;
+	initProcess(process);
+	initDocs(docs);
+	}
+    );
+    
+    query.error(function(xhr, status, err){
+    
+	if (xhr && xhr.responseText && xhr.responseText) {
+	    json = jQuery.parseJSON(xhr.responseText);
+	    if (json.Error) {
+		myConsole("ERROR", json.Error);
+	    } else {
+		myConsole("ERROR", xhr.responseText);
+	    }
+	}
+    
+	showAlert("Lost1 connection to Hyperledger blockchain service!");
+	state = stateOffline;
+	docs = state.mortgageDocs;
+	process = state.mortgageProcesses.mortgageOrigination;
+	initProcess(process);
+	initDocs(docs);
+    }
+    );
+}
+
+function initProcess(processSpec) {
+    generateProcessDiv(processSpec);
+    initAuditing(processSpec.auditing);
+}
+
+function initAuditing(auditing) {
+    if (auditing) {
+    var logs = auditing.auditLogs;
+    $("#myAuditLogs").html(logs);
+    }
+}
+
+function initDocs(docs) {
+    // Go through all docs in DOM
+    $(".doc").each(function(index, doc) {
+    var docId = doc.id;
+    console.log("initDocs: " + docId);
+    var fields = $("#" + docId).find("input");
+    var ledgerDoc = state.mortgageDocs[docId];
+    var docForm = ledgerDoc.form;
+    var docAccess = ledgerDoc.access;
+    var role = userRole();
+    var accessRight = docAccess[role];
+    
+    // Update fields
+    fields.each(function(index, field) {
+        var fieldId = field.name;
+        var val = docForm[fieldId];
+        if (val != undefined && val != "") {
+        //console.log(fieldId + ": " + val);
+        field.value = val;
+        } else if (field.type != "button") {
+        field.value = "";
+        }
+    });
+
+    // Show/hide form buttons
+    $("#" + docId + "-save").hide();
+    $("#" + docId + "-sign").hide();
+    $("#" + docId + "-revo").hide();
+    if ($("#" + docId).css('display') == 'none') {
+            $("#" + docId + "-expand").show();
+    }
+    if (accessRight["sign"] == "OK" && !docSigned($(doc), role)) {
+        // Show save+sign button unless already signed by user role; control enfored anyway by chaincode
+        console.log("Show save button");
+        $("#" + docId + "-save").show();
+        $("#" + docId + "-sign").show();
+        $("#" + docId + "-sign").css("background-color", "green");
+    } else if (accessRight["save"] == "OK" && !docSignedAny($(doc))) {
+        // Show save buttons unless already signed by anyone; control enfored anyway by chaincode
+        $("#" + docId + "-save").show();
+    } else if (accessRight["read"] != "OK") {
+        console.log("Hide save and sign buttons " + accessRight["read"]);
+            $("#" + docId + "-expand").hide();
+    } else if (docSigned($(doc), role)) {
+        // Show revoke button if signed by user role; control enfored anyway by chaincode
+        $("#" + docId + "-revo").show();
+        $("#" + docId + "-revo").css("background-color", "red");
+    }
+
+    // Configure legend
+    var roles = "LBSAN";
+    for (var i = 0; i < roles.length; i++) {
+        var role = roles[i];
+        var docIdAccess = docId + "-access-" + role;
+        var docIdAccessInfo = docId + "-accessInfo";
+        var accessRight = docAccess[role];
+
+        // Set role colors in legend
+        var color = "#E5E7E8";
+        if (accessRight["sign"] == "OK") {
+        color = "green";
+        } else if (accessRight["save"] == "OK") {
+        color = "black"
+        } else if (accessRight["read"] == "OK") {
+        color = "grey"
+        } else if (role == userRole()) {
+        // Current user has nor access at all
+        myCollapse($(doc));
+        }
+        $("#" + docIdAccess).css('color', color);
+
+        // Set doc status colors in legend
+        var colorTop = 'white';
+        var colorBottom = 'white';
+        $("#" + docIdAccess).css('border', '2px solid white');
+        if (role == userRole()) {
+        // Mark black if role is role of current user
+        colorBottom = 'black';
+        }
+        if (docSigned($(doc), role)) {
+        // Mark green if role has signed doc already
+        colorTop = 'green';
+        }
+        $("#" + docIdAccess).css('border-color', colorTop + ' white ' + colorBottom + ' white');
+
+        // Register hover functions in legend
+        $("#" + docIdAccess).hover(
+        function() {
+            var id = this.id;
+            var prefix = id.replace(/-access-./, "");
+            var n = id.length;
+            var m = prefix.length;
+            var postfix = id.substring(m);
+            var role = id.substring(n-1, n);
+            var roleLong = longName[role] + " (" + role + ")";
+            var accessRight = docAccess[role];
+            
+            var idAccessInfo = prefix + "-accessInfo";
+            var msg = roleLong + " has no access.";
+            var msg2 = "";
+            if (accessRight["sign"] == "OK") {
+            color = "green";
+            msg = roleLong + " can <b>read</b>, <b style=\"color: black\">save</b> and <b style=\"color: green\">sign</b> document.";
+            } else if (accessRight["save"] == "OK") {
+            color = "black";
+            msg = roleLong + " can <b>read</b> and <b style=\"color: black\">save</b> document."
+            } else if (accessRight["read"] == "OK") {
+            color = "grey";
+            msg = roleLong + " can <b>read</b> document"
+            }
+            if (role == userRole()) {
+            msg += "<br>Current user is " + roleLong + ".";
+            }
+            if (docSigned($(doc), role)) {
+            msg += "<br>" + roleLong + " has <b style=\"color: green\">signed</b> this document";
+            }
+            
+            //console.log("Hover " + id + " " + idAccessInfo + " (" + msg + ")");
+            var key = "#" + idAccessInfo;
+            $(".mainaccount").css('left', $(this).offset().left - $(".mainmenu").width() + $(this).width() );
+            $(key).css('left', $(this).offset().left - 150);
+            $(key).html(msg);
+            $(key).show();
+        },
+        function() {
+            $("#" + docIdAccessInfo).hide();
+        }
+        );
+    }
+    });
+}
+
+function signForm(form) {
+    // TODO: Sign form with private key
+    return "C8kif8DeiZsR+OhsoVpZaiEQEmG56ssrgJN2IDnuOG9neiBUEGZYjHQy5uOjfq2RDR";
+}
+
+function userRole() {
+    return token.substring(0, 1);
+}
+
+// Doc signed by all required to sign?
+function docSignedAll(doc) {
+    var id = doc.attr("id");
+    var ledgerDoc = state.mortgageDocs[id];
+    var docAccess = ledgerDoc.access;
+    var signatures = ledgerDoc.signatures;
+    
+    // Everyone has signed off?
+    var roles = "LBSAN";
+    var allSignatures = true;
+    for (var i = 0; i < roles.length; i++) {
+    var role = roles[i];
+    var right = docAccess[role];
+    if (right["sign"] == "OK" && (signatures[role] == "" || signatures[role] == undefined)) {
+        // Role should sign, but has not yet signed
+        return false;
+    }
+    }
+    return true;
+}
+
+// Doc signed by anyone required to sign?
+function docSignedAny(doc) {
+    var id = doc.attr("id");
+    var ledgerDoc = state.mortgageDocs[id];
+    var docAccess = ledgerDoc.access;
+    var signatures = ledgerDoc.signatures;
+    
+    // Everyone has signed off?
+    var roles = "LBSAN";
+    var allSignatures = true;
+    for (var i = 0; i < roles.length; i++) {
+    var role = roles[i];
+    var right = docAccess[role];
+    if (right["sign"] == "OK" && (signatures[role] != "" && signatures[role] != undefined)) {
+        // Role should sign, but has not yet signed
+        return true;
+    }
+    }
+    return false;
+}
+
+// Doc signed by user role?
+function docSigned(doc, role) {
+    var id = doc.attr("id");
+    var ledgerDoc = state.mortgageDocs[id];
+    var docAccess = ledgerDoc.access;
+    var accessRight = docAccess[role];
+    var signatures = ledgerDoc.signatures;
+    var signature = signatures[role];
+    
+    if (signature == undefined || signature == "") {
+    return false;
+    }
+    return true;
+}
+
+// Expand button control
+function myExpand(doc) {
+    var id = doc.attr("id");
+    
+    // Current user has read/sign access
+    console.log("Expanding " + id + "...");
+    $("#" + id + "-expand").hide();
+    $("#" + id + "-collapse").show();
+    $("#" + id + "-form").show();
+}
+
+// Collapse button control
+function myCollapse(doc) {
+    var id = doc.attr("id");
+    var ledgerDoc = state.mortgageDocs[id];
+    var docAccess = ledgerDoc.access;
+    var accessRight = docAccess[userRole()];
+
+    if (accessRight["read"] != "OK" &&
+        accessRight["save"] != "OK" &&
+        accessRight["sign"] != "OK") {
+        $("#" + id + "-expand").hide();
+    } else {
+        $("#" + id + "-expand").show();
+    }
+    
+    $("#" + id + "-collapse").hide();
+    $("#" + id + "-form").hide();
+}
+
+function registerNodeControls(id) {
+    // Node control
+    $("#" + id).click(function() {
+    console.log('Click...');
+    $(".doc").hide();
+    $(".docs").hide();
+    //$(".node").css("border-color", "white");
+    //$(this).css("border-color", "black");
+    var noDocs = true;
+    if (this.docs && this.docs.length > 0) {
+        $(".docs").show();
+        this.docs.forEach(function (docId) {
+        // TODO: Should test on doc
+        if (document.getElementById(docId) != undefined) {
+            var doc = $("#" + docId);
+            myCollapse(doc);
+            doc.show();
+            noDocs = false;
+        } else {
+            console.warn("Missing doc '" + docId + "'!");
+        }
+        });
+        if (noDocs) {
+        $(".docs").hide();
+        }
+    }
+    });
+}
+ 
+function registerDocControls() {   
+    $(".expand").click(function () {
+    myExpand($(this).parent().parent());
+    });
+    
+    $(".collapse").click(function () {
+    myCollapse($(this).parent().parent());
+    });
+    
+    $(".doc-button").click ( function() {
+    //console.log('Click...');
+    var id = this.name;
+    var n = id.length;
+    var docId = this.name.substr(0, n-5);
+    var op = this.name.substr(n-4, n);
+    var fields = docFields(docId);
+    var signature = signForm(fields);
+    //console.log(id + ": " + JSON.stringify(fields));
+    
+    var data = {
+    "jsonrpc": "2.0",
+    "method": "invoke",
+    "params": {
+       "type": 1,
+       "chaincodeID":{ "name": chaincodeName  },
+       "ctorMsg": {
+          "function":"invoke",
+          "args":[ token, docId, op, JSON.stringify(fields), signature]
+       },
+       "secureContext": obcUser
+    },
+    "id": 123
+    };
+
+
+    myConsoleJson("REQUEST", data);
+    var query = $.post(server + "/chaincode", JSON.stringify(data));
+    query.success(function(res, status){
+        myConsoleJson("RESPONSE", res);
+        getState();
+    });
+    query.error(function(xhr, status, err){
+        if (xhr && xhr.responseText && xhr.responseText) {
+        json = jQuery.parseJSON(xhr.responseText);
+        if (json.Error) {
+            myConsole("ERROR", json.Error);
+        } else {
+            myConsole("ERROR", xhr.responseText);
+        }
+        showAlert("Lost2 connection to Hyperledger blockchain service!");
+        }
+    });
+    }); 
+}
+
+function registerMainControls() {
+    // Call only once!
+    registerDocControls();
+    $("#myMainMenu").hover(
+    function() {
+        $(".mainmenu").css('left', $(this).offset().left);
+        $(".mainmenu").show();
+        // Hide menu after 4s
+        setTimeout(function() {
+        $(".mainmenu").hide()
+        }, 4000);
+    },
+    function() { });
+    
+    $("#myMainAccount").hover(
+    function() {
+        $(".mainaccount").css('left', $(this).offset().left - $(".mainmenu").width() + $(this).width() );
+        $(".mainaccount").css('text-align', 'right');
+        $(".mainaccount").show();
+        // Hide menu after 4s
+        setTimeout(function() {
+        $(".mainaccount").hide()
+        }, 4000);
+    },
+    function() { });
+    $(".mainmenu").hover(
+    function() { },
+    function() {
+        $(".mainmenu").hide();
+    });
+    $(".mainaccount").hover(
+    function() { },
+    function() {
+        $(".mainaccount").hide();
+    });
+
+    $(".dropdownitem").click( function() {
+    console.log('Click...');
+    $(this).parent().hide(); // Hide menu
+    
+    // TODO: somehow specifying target view in html doesn't work
+    var viewClass = this.id.replace(/myDropDownItem/g, '').toLowerCase();
+
+    var roleChange = false;
+    if (viewClass == "lender") {
+        token = "L" + generateToken();
+        $("#myUserName").html("Lender");
+        roleChange = true;
+    } else if (viewClass == "borrower") {
+        token = "B" + generateToken();
+        $("#myUserName").html("Borrower/Buyer");
+        roleChange = true;
+    } else if (viewClass == "seller") {
+        token = "S" + generateToken();
+        $("#myUserName").html("Seller");
+        roleChange = true;
+    } else if (viewClass == "appraiser") {
+        token = "A" + generateToken();
+        $("#myUserName").html("Appraiser");
+        roleChange = true;
+    } else if (viewClass == "notary") {
+        token = "N" + generateToken();
+        $("#myUserName").html("Notary");
+        roleChange = true;
+    }
+
+    if (roleChange) {
+        $(".doc").each(function(index, div) {
+            myCollapse($(div));
+        });
+        getState();
+    } else {
+        $(".processes").hide();
+        $(".docs").hide();
+        $(".parties").hide();
+        $(".consoles").hide();
+        $(".auditing").hide();
+
+        console.log('Showing ' + viewClass);
+        if (viewClass == "processes") {
+        $(".processes").show();
+        } else if (viewClass == "docs") {
+        $(".docs").show();
+        $(".doc").show();
+        $(".doc").each(function(index, div) {
+            myCollapse($(div));
+        });
+        } else if (viewClass == "parties") {
+        $(".parties").show();
+        $(".party").show();
+        $(".party").each(function(index, div) {
+            myCollapse($(div));
+        });
+        } else if (viewClass == "deploy") {
+        $(".processes").show();
+        deployChaincode();
+        } else if (viewClass == "consoles") {
+        $(".consoles").show();
+        } else if (viewClass == "auditing") {
+        $(".auditing").show();
+        } else {
+        console.warn("Non existing view class '" + viewClass + "'!")
+        }
+    }
+    });   
+}
+
+$(document).ready(function() {
+    console.log('Starting...');
+    myConsole("INFO", "Hyperledger blockchin " + server);
+    token = "L" + generateToken();
+    registerMainControls();
+    getState();
+    
+    // Login as Lender
+    $("#myUserName").html("Lender");
+    $(".docs").hide();
+    $(".parties").hide();
+    $(".consoles").hide();
+    $(".processes").show();
+    $(".auditing").hide();
+});
+
+     </script>
+   </head>
+   <body>
+     <div class="main">
+       <div class="header">
+     <div>
+       <a class="button button_right icon account" id="myMainAccount"><span></span></a>
+       <div class="username" id="myUserName"></div>
+       <a class="button button_left icon menu" id="myMainMenu"><span></span></a>
+     </div>
+     <div class="headertitle">Mortgage Origination</div>
+    </div>
+    
+    <div id="myAlert" class="alert">
+      <div id="myAlertMsg" class="alertMsg"></div>
+    </div>
+       <div class="mainmenu">
+     <div id="myDropDownItemProcesses" class="dropdownitem">Process</div>
+     <div id="myDropDownItemDocs" class="dropdownitem">Documents</div>
+     <!-- <div id="myDropDownItemParties" class="dropdownitem">Parties</div> -->
+     <div id="myDropDownItemAuditing" class="dropdownitem">Audit Logs</div>
+     <div id="myDropDownItemConsoles" class="dropdownitem">Console</div>
+  <!--   <div id="myDropDownItemDeploy" class="dropdownitem">Deploy Contract</div> -->
+       </div>
+       
+          <div class="mainaccount">
+        <div id="myDropDownItemLender" class="dropdownitem">Lender</div>
+        <div id="myDropDownItemBorrower" class="dropdownitem">Borrower</div>
+        <div id="myDropDownItemSeller" class="dropdownitem">Seller</div>
+        <div id="myDropDownItemAppraiser" class="dropdownitem">Appraiser</div>
+        <div id="myDropDownItemNotary" class="dropdownitem">Notary</div>
+        <!-- <div id="myDropDownItemSuper" class="dropdownitem">Super User</div> -->
+          </div>
+          
+          <div class="processes">
+        <div class="main-label-bold">Process</div>
+        <div id="myProcess" class="process">Mortgage Origination Steps</div>
+          </div>
+          
+          <div class="auditing">
+        <div class="main-label-bold">Audit Logs</div>
+        <div id="myAuditLogs" class="auditlogs"></div>
+          </div>
+          
+          <div class="consoles">
+        <div class="main-label-bold">Blockchain Console</div>
+        <div id="myConsole" class="console"></div>
+          </div>
+          
+          <div class="docs">
+        <div class="main-label-bold">Documents</div>
+
+        
+        <div id="myDocProperty" class="doc">
+          <form class="form-style">Property Information
+            <a class="button button_right icon expand" id="myDocProperty-expand"><span></span></a>
+            <a class="button button_right icon collapse" id="myDocProperty-collapse"><span></span></a>
+            <div class="accessinfo" id="myDocProperty-accessInfo"></div>
+            <a class="button button_right docaccess" id="myDocProperty-access-N"><span>N</span></a>
+            <a class="button button_right docaccess" id="myDocProperty-access-A"><span>A</span></a>
+            <a class="button button_right docaccess" id="myDocProperty-access-S"><span>S</span></a>
+            <a class="button button_right docaccess" id="myDocProperty-access-B"><span>B</span></a> 
+            <a class="button button_right docaccess" id="myDocProperty-access-L"><span>L</span></a>
+            <ul id="myDocProperty-form">
+              <li>
+            <input type="text" name="myDocProperty-address" id="myDocProperty-address"
+                   class="field-style field-split-80 align-left"
+                   placeholder="Subject Property Address (street, city, state & ZIP)" />
+            <input type="number" name="myDocProperty-noUnits" id="myDocProperty-noUnits"
+                   class="field-style field-split-20 align-right"
+                   placeholder="No. of Units" />
+            
+              </li>
+              <li>
+            <input type="text" name="myDocProperty-desc" id="myDocProperty-desc"
+                   class="field-style field-split-80 align-left"
+                   placeholder="Legal Description of Subject Property (attach description if necessary)" />
+            <input type="year" name="myDocProperty-yearBuilt" id="myDocProperty-yearBuilt"
+                   class="field-style field-split-20 align-right"
+                   placeholder="Year Built" />
+            
+              </li>
+              
+              <li>
+            <textarea name="myDocProperty-remarks" id="myDocProperty-remanks" class="field-style field-full align-none"
+                  placeholder="Remarks"></textarea>
+              </li>
+              <li>
+            <input type="button" value="Save" id="myDocProperty-save" name="myDocProperty-save" class="doc-button" />
+            <input type="button" value="Sign" id="myDocProperty-sign" name="myDocProperty-sign" class="doc-button" />
+            <input type="button" value="Revoke" id="myDocProperty-revo" name="myDocProperty-revo" class="doc-button" />
+              </li>
+            </ul>
+          </form>
+        </div>
+
+        <div id="myDocPurchaseContract" class="doc">
+          <form class="form-style">Real Estate Purchase Contract
+            <a class="button button_right icon expand" id="myDocPurchaseContract-expand"><span></span></a>
+            <a class="button button_right icon collapse" id="myDocPurchaseContract-collapse"><span></span></a>
+            <div class="accessinfo" id="myDocPurchaseContract-accessInfo"></div>
+            <a class="button button_right docaccess" id="myDocPurchaseContract-access-N"><span>N</span></a>
+            <a class="button button_right docaccess" id="myDocPurchaseContract-access-A"><span>A</span></a>
+            <a class="button button_right docaccess" id="myDocPurchaseContract-access-S"><span>S</span></a>
+            <a class="button button_right docaccess" id="myDocPurchaseContract-access-B"><span>B</span></a> 
+            <a class="button button_right docaccess" id="myDocPurchaseContract-access-L"><span>L</span></a>
+            <ul id="myDocPurchaseContract-form">
+              <li>
+                <div class="doc-input-label">The undersigned (herein "Purchaser") hereby offers to purchase 
+                  from the owner (herein "Seller") the real estate located at</div>
+            <input type="text" name="myDocPurchaseContract-address" id="myDocPurchaseContract-address" 
+                   class="field-style" placeholder=""/>
+            <div class="doc-input-label">in the city of</div>
+            <input type="text" name="myDocPurchaseContract-city" id="myDocPurchaseContract-city" 
+                   class="field-style" placeholder=""/>
+            <div class="doc-input-label">, County of</div>
+            <input type="text" name="myDocPurchaseContract-county" id="myDocPurchaseContract-county" 
+                   class="field-style" placeholder=""/>
+            <div class="doc-input-label">, State of</div>
+            <input type="text" name="myDocPurchaseContract-state" id="myDocPurchaseContract-state" 
+                   class="field-style" placeholder=""/>
+            <div class="doc-input-label">, the legal description of which is:</div>
+            <textarea name="myDocPurchaseContract-legaldesc" id="myDocPurchaseContract-legaldesc" 
+                  class="field-style field-full" placeholder=""></textarea>
+            <div class="doc-input-label">upon the following terms and conditions: </div>
+              </li>
+              <li>
+                <div class="doc-input-label-bold">1.Purchase Price and Conditions of Payment</div>      
+              </li>
+              <li>
+                <div class="doc-input-label">The purchase price shall be </div>
+                <input type="text" name="myDocPurchaseContract-price" id="myDocPurchaseContract-price" 
+                       class="field-style" placeholder=""/>
+                <div class="doc-input-label">Dollars ($) to be paid in accordance with subparagraph</div>
+                <input type="text" name="myDocPurchaseContract-method" id="myDocPurchaseContract-method" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label">, below: </div>
+              </li>
+              <li>
+            <div class="doc-input-label">A:  Cash. The purchase price shall be paid in its entirety 
+              in cash at the time of closing the sale. </div>
+              </li>
+              <li>
+            <div class="doc-input-label">B:  Cash Subject to New Mortgage. The purchase price shall be 
+              paid in cash at the time of closing the sale subject, however, to Purchaser's ability to 
+              obtain a first mortgage loan within</div>
+            <input type="text" name="myDocPurchaseContract-due" id="myDocPurchaseContract-due" 
+                       class="field-style field-split-10" placeholder=""/>
+            <div class="doc-input-label">days after the acceptance of this offer by Seller in the amount of $</div>
+            <input type="text" name="myDocPurchaseContract-loan" id="myDocPurchaseContract-loan" 
+                       class="field-style" placeholder=""/>
+            <div class="doc-input-label">, payable in not less than</div>
+            <input type="text" name="myDocPurchaseContract-months" id="myDocPurchaseContract-months" 
+                       class="field-style field-split-10" placeholder=""/>
+            <div class="doc-input-label">monthly installments, including interest at a rate not to exceed</div>
+            <input type="text" name="myDocPurchaseContract-interests" id="myDocPurchaseContract-interests" 
+                       class="field-style field-split-10" placeholder=""/>
+            <div class="doc-input-label">% financing. If such financing cannot be obtained within the 
+              time specified above then either Purchaser or Seller may terminate this agreement and any 
+              earnest money deposited by Purchaser will be promptly refunded.</div>
+              </li>       
+              <li>
+            <div class="doc-input-label-bold">2.Earnest Money Deposit </div>
+              </li>
+              <li>
+                <div class="doc-input-label">As earnest money Purchaser deposits $</div>
+                <input type="text" name="myDocPurchaseContract-earnest" id="myDocPurchaseContract-earnest" 
+                       class="field-style" placeholder=""/>
+                <div class="doc-input-label">with the broker which shall be applied to the purchase price at the time 
+                  of closing the sale.  In the event that this offer is not accepted by Seller this earnest money deposit 
+                  shall be promptly refunded to Purchaser by the broker.  In the event that this offer is accepted by 
+                  Seller and Purchaser shall fail to perform the terms of this agreement the earnest money deposit shall 
+                  be forfeited as and for liquidated damages suffered by Seller.  Seller is not, however, precluded from 
+                  asserting any other legal or equitable remedy, which may be available to enforce this agreement.</div> 
+              </li>
+              <li>
+            <div class="doc-input-label-bold">3.Real Estate Taxes, Assessments, and Adjustments</div>
+              </li>
+              <li>
+                <div class="doc-input-label">Real Estate Taxes accrued against the property shall be prorated through 
+                  the date of closing the sale and Seller shall pay all taxes allocated to the property through that date 
+                  of acceptance of this offer to purchase.  Rents, if any, shall be prorated through the date of closing 
+                  and all rent deposits shall be transferred to Purchaser. Existing casualty insurance shall be canceled
+                  /prorated through the date of closing. </div>
+              </li>
+              <li>
+            <div class="doc-input-label-bold">4.Title to the Property</div>
+              </li>
+              <li>
+                <div class="doc-input-label">Seller shall provide purchaser prior to the closing and promptly after the 
+                  acceptance of this offer, at Seller's expense and at Seller's option an abstract of title to the property 
+                  brought down to date or an owner's policy of title insurance in an amount equal to the purchase price, 
+                  said abstract of policy to show marketable or insurable title to the real estate in the name of Seller 
+                  subject only to easements, zoning and restrictions of record and free and clear of all other liens and 
+                  encumbrances except as stated in this offer.  If the abstract or title policy fails to show marketable or 
+                  insurable title in Seller a reasonable time shall be permitted to cure or correct defects.  Seller shall 
+                  convey title to Purchaser at the time of closing by a good and sufficient general warranty deed free and 
+                  clear of all liens and encumbrances except as otherwise provided in this offer and subject to easements, 
+                  zoning and restrictions of record. </div>
+              </li>
+              <li>
+            <div class="doc-input-label-bold">5.Possession of the Property</div>
+              </li>
+              <li>
+                <div class="doc-input-label">Purchaser shall be given possession of the property on </div>
+                <input type="text" name="myDocPurchaseContract-possessiondate" id="myDocPurchaseContract-possessiondate" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label">, 20</div>
+                <input type="text" name="myDocPurchaseContract-possessionyear" id="myDocPurchaseContract-possessionyear" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label">. A failure on the part of Seller to transfer possession as specified will 
+                  not make Seller a tenant of Purchaser, but in such event Seller shall pay to Purchaser $</div>
+                <input type="text" name="myDocPurchaseContract-penalty" id="myDocPurchaseContract-penalty" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label">per day as damages for breach of contract and not as rent.  All other remedies, 
+                  which Purchaser may have under law, are reserved to Purchaser.</div>
+              </li>
+              <li>
+            <div class="doc-input-label-bold">6.Risk of Loss</div>
+              </li>
+              <li>
+                <div class="doc-input-label">The risk of loss by destruction or damage to the property by fire or otherwise 
+                  prior to the closing of the sale is that of Seller.  If all or a substantial portion of the improvements on 
+                  the property are destroyed or damaged prior to the closing and transfer of title this agreement shall be void 
+                  able at Purchaser's option and in the event Purchaser elects to avoid this agreement the earnest money deposited 
+                  shall be promptly refunded. </div>
+              </li>
+              <li>
+            <div class="doc-input-label-bold">7.Improvements and Fixtures Included</div>
+              </li>
+              <li>
+                <div class="doc-input-label">This offer to purchase includes all improvements, buildings and fixtures presently 
+                  on the real estate including but not limited to electrical, gas, heating, air conditioning, plumbing equipment, 
+                  built-in appliances, hot water heaters, screens, storm windows, doors, Venetian blinds, drapery hardware, awnings, 
+                  attached carpeting, radio, television antennas, trees, shrubs, flowers, fences and </div>
+            <textarea name="myDocPurchaseContract-excludes" id="myDocPurchaseContract-excludes" 
+                      class="field-style field-full" placeholder="">
+                </textarea>
+              </li>
+              <li>
+            <div class="doc-input-label-bold">8.General Conditions</div>
+              </li>
+              <li>
+                <div class="doc-input-label">It is expressly agreed that this agreement to purchase real estate includes the 
+                  entire agreement of Purchaser and Seller.  This agreement shall be binding upon the heirs, personal representatives, 
+                  successors and assigns of both Purchaser and Seller.  This agreement shall be interpreted and enforced in accordance 
+                  with the laws of the State of </div>
+                <input type="text" name="myDocPurchaseContract-lawstate" id="myDocPurchaseContract-lawstate" 
+                       class="field-style" placeholder=""/>
+                <div class="doc-input-label">.</div>
+              </li>
+              <li>
+            <div class="doc-input-label-bold">9.Special Conditions</div>
+              </li>
+              <li>
+                <textarea name="myDocPurchaseContract-specials" id="myDocPurchaseContract-specials" 
+                      class="field-style field-full" placeholder=""></textarea>
+              </li>
+              <li>
+            <div class="doc-input-label-bold">10.Time for Acceptance and Closing</div>
+              </li>
+              <li>
+                <div class="doc-input-label">This offer is void if not accepted by Seller in writing on or before </div>
+                <input type="text" name="myDocPurchaseContract-sellerduetime" id="myDocPurchaseContract-sellerduetime" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label">A.M./P.M. of the </div>
+                <input type="text" name="myDocPurchaseContract-sellerdueday" id="myDocPurchaseContract-sellerdueday" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label">day of </div>
+                <input type="text" name="myDocPurchaseContract-sellerduemonth" id="myDocPurchaseContract-sellerduemonth" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label">, 20</div>
+                <input type="text" name="myDocPurchaseContract-sellerdueyear" id="myDocPurchaseContract-sellerdueyear" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label">. Closing of the sale shall take place </div>
+                <input type="text" name="myDocPurchaseContract-closingdue" id="myDocPurchaseContract-closingdue" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label"> days after Purchaser's receipt of an abstract showing marketable title in Seller or title insurance 
+                  binder showing insurable title in Seller. This offer is made at </div>
+                <input type="text" name="myDocPurchaseContract-offerplace" id="myDocPurchaseContract-offerplace" 
+                       class="field-style" placeholder=""/>
+                <div class="doc-input-label"> , State of </div>
+                <input type="text" name="myDocPurchaseContract-offerstate" id="myDocPurchaseContract-offerstate" 
+                       class="field-style" placeholder=""/>
+                <div class="doc-input-label">, this </div>
+                <input type="text" name="myDocPurchaseContract-offerday" id="myDocPurchaseContract-offerday" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label">day of </div>
+                <input type="text" name="myDocPurchaseContract-offermonth" id="myDocPurchaseContract-offermonth" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label"> , 20</div>
+                <input type="text" name="myDocPurchaseContract-offeryear" id="myDocPurchaseContract-offeryear" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label">.</div>
+              </li>
+              <li>
+            <div class="doc-input-label-bold">Acceptance by Seller</div>
+              </li>
+              <li>
+                <div class="doc-input-label">The foregoing offer to purchase real estate is hereby accepted in 
+                  accordance with the terms and conditions specified above. The undersigned hereby agrees to pay 
+                  a brokerage fee of $</div>
+                <input type="text" name="myDocPurchaseContract-brokeragefee" id="myDocPurchaseContract-brokeragefee" 
+                       class="field-style" placeholder=""/>
+                <div class="doc-input-label">to </div>
+                <input type="text" name="myDocPurchaseContract-broker" id="myDocPurchaseContract-broker" 
+                       class="field-style" placeholder=""/>
+                <div class="doc-input-label">, broker, in accordance with the existing listing contract. Dated this </div>
+                <input type="text" name="myDocPurchaseContract-acceptanceday" id="myDocPurchaseContract-acceptanceday" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label"> day of </div>
+                <input type="text" name="myDocPurchaseContract-acceptancemonth" id="myDocPurchaseContract-acceptancemonth" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label">, 20</div>
+                <input type="text" name="myDocPurchaseContract-acceptanceyear" id="myDocPurchaseContract-acceptanceyear" 
+                       class="field-style field-split-10" placeholder=""/>
+                <div class="doc-input-label">.</div>
+              </li>      
+              <li>
+            <input type="button" value="Save" id="myDocPurchaseContract-save" name="myDocPurchaseContract-save" class="doc-button" />
+            <input type="button" value="Sign" id="myDocPurchaseContract-sign" name="myDocPurchaseContract-sign" class="doc-button" />
+            <input type="button" value="Revoke" id="myDocPurchaseContract-revo" name="myDocPurchaseContract-revo" class="doc-button" />
+              </li>
+            </ul>
+          </form>
+        </div>
+
+        
+        <div id="myDocBorrower" class="doc">
+          <form class="form-style">Borrower/Buyer Information
+            <a class="button button_right icon expand" id="myDocBorrower-expand"><span></span></a>
+            <a class="button button_right icon collapse" id="myDocBorrower-collapse"><span></span></a>
+            <div class="accessinfo" id="myDocBorrower-accessInfo"></div>
+            <a class="button button_right docaccess" id="myDocBorrower-access-N"><span>N</span></a>
+            <a class="button button_right docaccess" id="myDocBorrower-access-A"><span>A</span></a>
+            <a class="button button_right docaccess" id="myDocBorrower-access-S"><span>S</span></a>
+            <a class="button button_right docaccess" id="myDocBorrower-access-B"><span>B</span></a> 
+            <a class="button button_right docaccess" id="myDocBorrower-access-L"><span>L</span>
+            </a>
+            <ul id="myDocBorrower-form">
+              <li>
+            <div class="doc-input-label-bold">Borrower:</div>
+              </li>
+              <li>
+            <input type="text" name="myDocBorrower-B-name" id="myDocBorrower-B-name"
+                   class="field-style field-full align-none"
+                   placeholder="Borrower's Name (include Jr. or Sr. if applicable)" />
+              </li>
+              <li>
+            <input type="text" name="myDocBorrower-B-ssn" id="myDocBorrower-B-ssn"
+                   class="field-style field-split-25 align-left"
+                   placeholder="Social Security Number" />
+            <input type="phone" name="myDocBorrower-B-phone" id="myDocBorrower-B-phone"
+                   class="field-style field-split-25 align-left"
+                   placeholder="Home Phone" />
+            <input type="date" name="myDocBorrower-B-dob" id="myDocBorrower-B-dob"
+                   class="field-style field-split-25 align-left"
+                   placeholder="Date of Birth" />
+            <input type="number" name="myDocBorrower-B-yrsschool" id="myDocBorrower-B-yrsschool"
+                   class="field-style field-split-25 align-left"
+                   placeholder="Yrs. School" />
+              </li>
+              <li>
+            <div class="doc-input-label-bold">Status:</div>
+            <input type="radio" name="myDocBorrower-B-status" id="myDocBorrower-B-married" value="married" checked />
+            <div class="doc-input-label">Married</div>
+            <input type="radio" name="myDocBorrower-B-status" id="myDocBorrower-B-separated" value="separated" />
+            <div class="doc-input-label">Separated</div>
+            <input type="radio" name="myDocBorrower-B-status" id="myDocBorrower-B-unmarried" value="unmarried" />
+            <div class="doc-input-label">Unmarried (include single, divorced, widowed)</div>
+              </li>
+              <li>
+            <div class="doc-input-label-bold">Dependents (not listed by Co-Borrower):</div>
+            <input type="number" name="myDocBorrower-B-depsnum" id="myDocBorrower-B-depsnum"
+                   class="field-style field-split-30 align-right"
+                   placeholder="Number" />
+            <input type="text" name="myDocBorrower-B-depsages" id="myDocBorrower-B-depsages"
+                   class="field-style field-split-20 align-right"
+                   placeholder="Ages" />
+              </li>
+              <li>
+            <div class="doc-input-label-bold">Present Address</div>
+            <input type="radio" name="myDocBorrower-B-addrstatus" id="myDocBorrower-B-own" value="freeSimple" checked />
+            <div class="doc-input-label">Own</div>
+            <input type="radio" name="myDocBorrower-B-addrstatus" id="myDocBorrower-B-leasehold" value="leasehold" />
+            <div class="doc-input-label">Rent</div>
+            <input type="number" name="myDocBorrower-B-addryears" id="myDocBorrower-B-addryears"
+                   class="field-style field-split-30 align-right"
+                   placeholder="Number of Years" />
+              </li>
+              
+              <li>
+            <div class="doc-input-label-bold">Co-Borrower:</div>
+              </li>
+              <li>
+            <input type="text" name="myDocBorrower-CB-name" id="myDocBorrower-CB-name"
+                   class="field-style field-full align-none"
+                   placeholder="Co-Borrower's Name (include Jr. or Sr. if applicable)" />
+              </li>
+              <li>
+            <input type="text" name="myDocBorrower-CB-ssn" id="myDocBorrower-CB-ssn"
+                   class="field-style field-split-25 align-left"
+                   placeholder="Social Security Number" />
+            <input type="phone" name="myDocBorrower-CB-phone" id="myDocBorrower-CB-phone"
+                   class="field-style field-split-25 align-left"
+                   placeholder="Home Phone" />
+            <input type="date" name="myDocBorrower-CB-dob" id="myDocBorrower-CB-dob"
+                   class="field-style field-split-25 align-left"
+                   placeholder="Date of Birth" />
+            <input type="number" name="myDocBorrower-CB-yrsschool" id="myDocBorrower-CB-yrsschool"
+                   class="field-style field-split-25 align-left"
+                   placeholder="Yrs. School" />
+            
+              </li>
+              <li>
+            <div class="doc-input-label-bold">Status:</div>
+            <input type="radio" name="myDocBorrower-CB-status" id="myDocBorrower-CB-married" value="married" checked />
+            <div class="doc-input-label">Married</div>
+            <input type="radio" name="myDocBorrower-CB-status" id="myDocBorrower-CB-separated" value="separated" />
+            <div class="doc-input-label">Separated</div>
+            <input type="radio" name="myDocBorrower-CB-status" id="myDocBorrower-CB-unmarried" value="unmarried" />
+            <div class="doc-input-label">Unmarried (include single, divorced, widowed)</div>
+              </li>
+              <li>
+            <div class="doc-input-label-bold">Dependents (not listed by Co-Borrower):</div>
+            <input type="number" name="myDocBorrower-CB-depsnum" id="myDocBorrower-CB-depsnum"
+                   class="field-style field-split-30 align-right"
+                   placeholder="Number" />
+            <input type="text" name="myDocBorrower-CB-depsages" id="myDocBorrower-CB-depsages"
+                   class="field-style field-split-20 align-right"
+                   placeholder="Ages" />
+              </li>
+              <li>
+            <div class="doc-input-label-bold">Present Address</div>
+            <input type="radio" name="myDocBorrower-CB-addrstatus" id="myDocBorrower-CB-own" value="freeSimple" checked />
+            <div class="doc-input-label">Own</div>
+            <input type="radio" name="myDocBorrower-CB-addrstatus" id="myDocBorrower-CB-leasehold" value="leasehold" />
+            <div class="doc-input-label">Rent</div>
+            <input type="number" name="myDocBorrower-CB-addryears" id="myDocBorrower-CB-addryears"
+                   class="field-style field-split-30 align-right"
+                   placeholder="Number of Years" />
+              </li>
+              <!-- <li> -->
+              <!--   <input type="text" name="sumit" -->
+              <!--   class="field-style field-full align-none" -->
+              <!--   placeholder="Subject" /> -->
+              <!-- </li> -->
+              <!-- <li> -->
+              <!--   <textarea name="field5" class="field-style" -->
+              <!--      placeholder="Message"></textarea> -->
+              <!-- </li> -->
+              <li>
+            <input type="email" name="field2"
+                   class="field-style field-split align-right"
+                   placeholder="Email" />
+            
+              </li>
+              <li>
+            <input type="button" value="Save" id="myDocBorrower-save" name="myDocBorrower-save" class="doc-button" />
+            <input type="button" value="Sign" id="myDocBorrower-sign" name="myDocBorrower-sign" class="doc-button" />
+            <input type="button" value="Revoke" id="myDocBorrower-revo" name="myDocBorrower-revo" class="doc-button" />
+              </li>
+            </ul>
+          </form>
+        </div>
+        
+        <div id="myDocMortgageType" class="doc">
+          <form class="form-style">Type of Mortgage and Terms of Loan
+            <a class="button button_right icon expand" id="myDocMortgageType-expand"><span></span></a>
+            <a class="button button_right icon collapse" id="myDocMortgageType-collapse"><span></span></a>
+            <div class="accessinfo" id="myDocMortgageType-accessInfo"></div>
+            <a class="button button_right docaccess" id="myDocMortgageType-access-N"><span>N</span></a>
+            <a class="button button_right docaccess" id="myDocMortgageType-access-A"><span>A</span></a>
+            <a class="button button_right docaccess" id="myDocMortgageType-access-S"><span>S</span></a>
+            <a class="button button_right docaccess" id="myDocMortgageType-access-B"><span>B</span></a> 
+            <a class="button button_right docaccess" id="myDocMortgageType-access-L"><span>L</span></a>
+            <ul id="myDocMortgageType-form">
+              <li>
+            <div class="doc-input-label-bold">Mortgage Applied for:</div>
+            <input type="checkbox" name="myDocMortgageType-type" id="myDocMortgageType-va" value="va" />
+            <div class="doc-input-label">V.A.</div>
+            <input type="checkbox" name="myDocMortgageType-type" id="myDocMortgageType-fha" value="fha" />
+            <div class="doc-input-label">FHA</div>
+            <input type="checkbox" name="myDocMortgageType-type" id="myDocMortgageType-conventional" value="conventional"/>
+            <div class="doc-input-label">Conventional</div>
+            <input type="checkbox" name="myDocMortgageType-type" id="myDocMortgageType-usda" value="usda"/>
+            <div class="doc-input-label">USDA/Rural Housing Service</div>
+            <input type="checkbox" name="myDocMortgageType-type" id="myDocMortgageType-other" value="other"/>
+            <div class="doc-input-label">Other (explain):</div>
+            <input type="text" name="myDocMortgageType-otherexplain" id="myDocMortgageType-otherexplain"
+                       class="field-style field-full" 
+                       placeholder="" />
+              </li>
+              <li>
+            <div class="doc-input-label-bold doc-input-label-split-50">Agency Case Number</div>
+            <div class="doc-input-label-bold doc-input-label-split-50">Lender Case Number</div>             
+                <input type="text" name="myDocMortgageType-agency" id="myDocMortgageType-agency"
+                       class="field-style field-split align-left"
+                       placeholder="" />
+            <input type="text" name="myDocMortgageType-lender" id="myDocMortgageType-lender"
+                       class="field-style field-split align-right"
+                       placeholder="" />                
+              </li>
+              <li>
+            <div class="doc-input-label-bold doc-input-label-split-30">Amount</div>
+            <div class="doc-input-label-bold doc-input-label-split-30">Interest Rate</div>
+            <div class="doc-input-label-bold doc-input-label-split-30">No. of Months</div>          
+                <input type="text" name="myDocMortgageType-amount" id="myDocMortgageType-amount"
+                       class="field-style field-split-30 align-left"
+                       placeholder="$" />
+            <input type="text" name="myDocMortgageType-ir" id="myDocMortgageType-ir"
+                       class="field-style field-split-30 align-left"
+                       placeholder="%" />
+                <input type="number" name="myDocMortgageType-months" id="myDocMortgageType-months"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />            
+              </li>         
+              <li>
+            <input type="button" value="Save" id="myDocMortgageType-save" name="myDocMortgageType-save" class="doc-button" />
+            <input type="button" value="Sign" id="myDocMortgageType-sign" name="myDocMortgageType-sign" class="doc-button" />
+              </li>       
+            </ul>
+          </form>
+        </div>
+        
+        <div id="myDocMortgagePurpose" class="doc">
+          <form class="form-style">Mortgage Purpose 
+            <a class="button button_right icon expand" id="myDocMortgagePurpose-expand"><span></span></a>
+            <a class="button button_right icon collapse" id="myDocMortgagePurpose-collapse"><span></span></a>
+            <div class="accessinfo" id="myDocMortgagePurpose-accessInfo"></div>
+            <a class="button button_right docaccess" id="myDocMortgagePurpose-access-N"><span>N</span></a>
+            <a class="button button_right docaccess" id="myDocMortgagePurpose-access-A"><span>A</span></a>
+            <a class="button button_right docaccess" id="myDocMortgagePurpose-access-S"><span>S</span></a>
+            <a class="button button_right docaccess" id="myDocMortgagePurpose-access-B"><span>B</span></a> 
+            <a class="button button_right docaccess" id="myDocMortgagePurpose-access-L"><span>L</span></a>
+            <ul id="myDocMortgagePurpose-form">
+              
+              <li>
+            <div class="doc-input-label-bold">Loan will be used for</div>
+            <input type="radio" name="myDocMortgagePurpose-purpose" id="myDocMortgagePurpose-purchase" value="purchase" checked />
+            <div class="doc-input-label">Purchase</div>
+            <input type="radio" name="myDocMortgagePurpose-purpose" id="myDocMortgagePurpose-construction" value="construction" />
+            <div class="doc-input-label">Construction</div>
+            <input type="radio" name="myDocMortgagePurpose-purpose" id="myDocMortgagePurpose-permanent" value="permanent"/>
+            <div class="doc-input-label">Construction-Permanent</div>
+            <input type="radio" name="myDocMortgagePurpose-purpose" id="myDocMortgagePurpose-purposeOther" value="other"/>
+            <div class="doc-input-label">Other (explain)</div>
+              </li>
+              <li>
+            <div class="doc-input-label-bold">Property will be used for</div>
+            <input type="radio" name="myDocMortgagePurpose-usage" id="myDocMortgagePurpose-primary" value="primary" checked />
+            <div class="doc-input-label">Primary Residence</div>
+            <input type="radio" name="myDocMortgagePurpose-usage" id="myDocMortgagePurpose-secondary" value="secondary" />
+            <div class="doc-input-label">Secondary Residence</div>
+            <input type="radio" name="myDocMortgagePurpose-usage" id="myDocMortgagePurpose-investment" value="investment" />
+            <div class="doc-input-label">Investment</div>
+            <input type="radio"  name="myDocMortgagePurpose-usage" id="myDocMortgagePurpose-usageOther" value="other"  />
+            <div class="doc-input-label">Other (explain)</div>
+            <input type="text" name="myDocMortgagePurpose-usageexplain" id="myDocMortgagePurpose-usageexplain"
+                   class="field-style field-full"
+                   placeholder="" />
+              </li>
+              <li>
+            <div class="doc-input-label-bold">Complete this line of construction and construction-permanent loan:</div>
+              </li>
+              <li>
+            <input type="year" name="myDocMortgagePurpose-yearLotAcquired" id="myDocMortgagePurpose-yearLotAcquired"
+                   class="field-style field-split-30 align-left"
+                   placeholder="Year Lot Acquired" />
+            <input type="text" name="myDocMortgagePurpose-originalCost" id="myDocMortgagePurpose-originalCost"
+                   class="field-style field-split-30 align-left"
+                   placeholder="Original Cost ($)" />
+            <input type="text" name="myDocMortgagePurpose-amountExistingLiens" id="myDocMortgagePurpose-amountExistingLiens"
+                   class="field-style field-split-30 align-left"
+                   placeholder="Amount Existing Liens ($)" />
+              </li>
+              <li>
+            <div class="doc-input-label-bold">Complete this line if this is a refinance loan:</div>
+              </li>
+              <li>
+            <input type="text" name="myDocMortgagePurpose-presentValue" id="myDocMortgagePurpose-presentValue"
+                   class="field-style field-split-30 align-left"
+                   placeholder="(a) Present Value of Lot ($)" />
+            <input type="text" name="myDocMortgagePurpose-costImprovements" id="myDocMortgagePurpose-costImprovements"
+                   class="field-style field-split-30 align-left"
+                   placeholder="(b) Cost of Improvements ($)" />
+            <input type="text" name="myDocMortgagePurpose-valueTotal" id="myDocMortgagePurpose-valueTotal"
+                   class="field-style field-split-30 align-left"
+                   placeholder="Total a + b ($)" />
+              </li>
+              <li>
+            <input type="text" name="myDocMortgagePurpose-titleHolder" id="myDocMortgagePurpose-titleHolder"
+                   class="field-style field-split align-left"
+                   placeholder="Title will be held in what Name(s)" />
+            <input type="text" name="myDocMortgagePurpose-mannerTitleHeld" id="myDocMortgagePurpose-mannerTitleHeld"
+                   class="field-style field-split align-right"
+                   placeholder="Manner in which Title will be held" />
+              </li>
+              <li>
+            <div class="doc-input-label-bold">Estate will be held in</div>
+            <input type="radio" id="myDocMortgagePurpose-freeSimple" name="myDocMortgagePurpose-held" value="freeSimple" checked />
+            <div class="doc-input-label">Free Simple</div>
+            <input type="radio" id="myDocMortgagePurpose-leasehold" name="myDocMortgagePurpose-held" value="leasehold" />
+            <div class="doc-input-label">Leasehold (show expiration date)</div>
+            <input type="radio" id="myDocMortgagePurpose-constructionPermanent" name="myDocMortgagePurpose-held" value="constructionPermanent" />
+            <div class="doc-input-label">Construction-Permanent</div>
+              </li>
+              <li>
+            <input type="button" value="Save" id="myDocMortgagePurpose-save" name="myDocMortgagePurpose-save" class="doc-button" />
+            <input type="button" value="Sign" id="myDocMortgagePurpose-sign" name="myDocMortgagePurpose-sign" class="doc-button" />
+            <input type="button" value="Revoke" id="myDocMortgagePurpose-revo" name="myDocMortgagePurpose-revo" class="doc-button" />
+              </li>       
+            </ul>
+          </form>
+        </div>
+        
+        <div id="myDocEmployment" class="doc">
+          <form class="form-style">Borrower&#39;s Employment Information
+            <a class="button button_right icon expand" id="myDocEmployment-expand"><span></span></a>
+            <a class="button button_right icon collapse" id="myDocEmployment-collapse"><span></span></a>
+            <div class="accessinfo" id="myDocEmployment-accessInfo"></div>
+            <a class="button button_right docaccess" id="myDocEmployment-access-N"><span>N</span></a>
+            <a class="button button_right docaccess" id="myDocEmployment-access-A"><span>A</span></a>
+            <a class="button button_right docaccess" id="myDocEmployment-access-S"><span>S</span></a>
+            <a class="button button_right docaccess" id="myDocEmployment-access-B"><span>B</span></a> 
+            <a class="button button_right docaccess" id="myDocEmployment-access-L"><span>L</span></a>
+            <ul id="myDocEmployment-form">
+              <li>
+            <div class="doc-input-label-bold">Borrower:</div>
+              </li>
+              <li>
+            <input type="checkbox" name="myDocEmployment-selfemployed" id="myDocEmployment-selfemployed" value="selfemployed" />
+            <div class="doc-input-label">Self Employed</div>
+              </li>
+              <li>
+            <div class="doc-input-label-bold doc-input-label-split-30">Name & Address of Employer</div>
+            <div class="doc-input-label-bold doc-input-label-split-30">Yrs. on this job</div>
+            <div class="doc-input-label-bold doc-input-label-split-30">Yrs. employed in this line of work/profession</div>          
+            <input type="text" name="myDocEmployment-employer" id="myDocEmployment-employer"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+            <input type="number" name="myDocEmployment-jobyrs" id="myDocEmployment-jobyrs"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+            <input type="number" name="myDocEmployment-professionyrs" id="myDocEmployment-professionyrs"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+              </li>
+              <li>
+            <div class="doc-input-label-bold doc-input-label-split-50">Position/Title/Type of Business</div>
+            <div class="doc-input-label-bold doc-input-label-split-50">Business Phone (incl. area code)</div>               
+            <input type="text" name="myDocEmployment-position" id="myDocEmployment-position"
+                       class="field-style field-split align-left"
+                       placeholder="" />
+            <input type="text" name="myDocEmployment-phone" id="myDocEmployment-phone"
+                       class="field-style field-split align-right"
+                       placeholder="" />
+              </li>
+              
+              
+              <li>
+            <div class="doc-input-label-bold">Co-Borrower:</div>
+              </li>
+              <li>
+            <input type="checkbox" name="myDocEmployment-CB-selfemployed" id="myDocEmployment-CB-selfemployed" value="selfemployed" />
+            <div class="doc-input-label">Self Employed</div>
+              </li>
+              <li>
+            <div class="doc-input-label-bold doc-input-label-split-30">Name & Address of Employer</div>
+            <div class="doc-input-label-bold doc-input-label-split-30">Yrs. on this job</div>
+            <div class="doc-input-label-bold doc-input-label-split-30">Yrs. employed in this line of work/profession</div>          
+            <input type="text" name="myDocEmployment-CB-employer" id="myDocEmployment-CB-employer"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+            <input type="number" name="myDocEmployment-CB-jobyrs" id="myDocEmployment-CB-jobyrs"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+            <input type="number" name="myDocEmployment-CB-professionyrs" id="myDocEmployment-CB-professionyrs"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+              </li>
+              <li>
+            <div class="doc-input-label-bold doc-input-label-split-50">Position/Title/Type of Business</div>
+            <div class="doc-input-label-bold doc-input-label-split-50">Business Phone (incl. area code)</div>               
+            <input type="text" name="myDocEmployment-CB-position" id="myDocEmployment-CB-position"
+                       class="field-style field-split align-left"
+                       placeholder="" />
+            <input type="text" name="myDocEmployment-CB-phone" id="myDocEmployment-CB-phone"
+                       class="field-style field-split align-right"
+                       placeholder="" />
+              </li>
+              <li>
+            <input type="button" value="Save" id="myDocEmployment-save" name="myDocEmployment-save" class="doc-button" />
+            <input type="button" value="Sign" id="myDocEmployment-sign" name="myDocEmployment-sign" class="doc-button" />
+            <input type="button" value="Revoke" id="myDocEmployment-revo" name="myDocEmployment-revo" class="doc-button" />
+              </li>
+            </ul>
+          </form>
+        </div>
+        
+        <div id="myDocMonthlyIncomeHousingExpense" class="doc">
+          <form class="form-style">Borrower&#39;s Monthly Income and Combined Housing Expense
+            <a class="button button_right icon expand" id="myDocMonthlyIncomeHousingExpense-expand"><span></span></a>
+            <a class="button button_right icon collapse" id="myDocMonthlyIncomeHousingExpense-collapse"><span></span></a>
+            <div class="accessinfo" id="myDocMonthlyIncomeHousingExpense-accessInfo"></div>
+            <a class="button button_right docaccess" id="myDocMonthlyIncomeHousingExpense-access-N"><span>N</span></a>
+            <a class="button button_right docaccess" id="myDocMonthlyIncomeHousingExpense-access-A"><span>A</span></a>
+            <a class="button button_right docaccess" id="myDocMonthlyIncomeHousingExpense-access-S"><span>S</span></a>
+            <a class="button button_right docaccess" id="myDocMonthlyIncomeHousingExpense-access-B"><span>B</span></a> 
+            <a class="button button_right docaccess" id="myDocMonthlyIncomeHousingExpense-access-L"><span>L</span></a>
+            <ul id="myDocMonthlyIncomeHousingExpense-form">
+              <li>
+                <table>
+                  <tr><th><div class="doc-input-label">Gross Monthly Income</div></td>
+                    <th><div class="doc-input-label">Borrower</div></td>
+                    <th><div class="doc-input-label">Co-Borrower</div></td>
+                    <th><div class="doc-input-label">Total</div></td>
+                    <th><div class="doc-input-label">Combined Monthly Housing Expenses</div></td>
+                    <th><div class="doc-input-label">Present</div></td>
+                    <th><div class="doc-input-label">Proposed</div></td>
+                  </tr>
+                  <tr><td><div class="doc-input-label">Base Empl. Income*</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-B-income" id="myDocMonthlyIncomeHousingExpense-B-income"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-CB-income" id="myDocMonthlyIncomeHousingExpense-CB-income"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-income" id="myDocMonthlyIncomeHousingExpense-income"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><div class="doc-input-label">Rent</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-rent-present" id="myDocMonthlyIncomeHousingExpense-rent-present"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td></td>
+                  </tr>
+                  <tr><td><div class="doc-input-label">Overtime</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-B-ot" id="myDocMonthlyIncomeHousingExpense-B-ot"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-CB-ot" id="myDocMonthlyIncomeHousingExpense-CB-ot"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-ot" id="myDocMonthlyIncomeHousingExpense-ot"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><div class="doc-input-label">First Mortgage (P&I)</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-fm-present" id="myDocMonthlyIncomeHousingExpense-fm-present"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-fm-proposed" id="myDocMonthlyIncomeHousingExpense-fm-proposed"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                  </tr>
+                  <tr><td><div class="doc-input-label">Bonuses</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-B-bonus" id="myDocMonthlyIncomeHousingExpense-B-bonus"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-CB-bonus" id="myDocMonthlyIncomeHousingExpense-CB-bonus"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-bonus" id="myDocMonthlyIncomeHousingExpense-bonus"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><div class="doc-input-label">Other Financing (P&I)</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-fin-present" id="myDocMonthlyIncomeHousingExpense-fin-present"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-fin-proposed" id="myDocMonthlyIncomeHousingExpense-fin-proposed"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                  </tr>
+                  <tr><td><div class="doc-input-label">Commissions</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-B-commissions" id="myDocMonthlyIncomeHousingExpense-B-commissions"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-CB-commissions" id="myDocMonthlyIncomeHousingExpense-CB-commissions"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-commissions" id="myDocMonthlyIncomeHousingExpense-commissions"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><div class="doc-input-label">Hazard Insurance</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-hi-present" id="myDocMonthlyIncomeHousingExpense-hi-present"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-hi-proposed" id="myDocMonthlyIncomeHousingExpense-hi-proposed"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                  </tr>
+                  <tr><td><div class="doc-input-label">Dividends/Interest</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-B-dividends" id="myDocMonthlyIncomeHousingExpense-B-dividends"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-CB-dividends" id="myDocMonthlyIncomeHousingExpense-CB-dividends"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-dividends" id="myDocMonthlyIncomeHousingExpense-dividends"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><div class="doc-input-label">Real Estate Taxes</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-tax-present" id="myDocMonthlyIncomeHousingExpense-tax-present"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-tax-proposed" id="myDocMonthlyIncomeHousingExpense-tax-proposed"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                  </tr>
+                  <tr><td><div class="doc-input-label">Net Rental Income</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-B-rental" id="myDocMonthlyIncomeHousingExpense-B-rental"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-CB-rental" id="myDocMonthlyIncomeHousingExpense-CB-rental"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-rental" id="myDocMonthlyIncomeHousingExpense-rental"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><div class="doc-input-label">Mortgage Insurance</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-mi-present" id="myDocMonthlyIncomeHousingExpense-mi-present"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-mi-proposed" id="myDocMonthlyIncomeHousingExpense-mi-proposed"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                  </tr>
+                  <tr><td rowspan="2"><div class="doc-input-label">Other (before completing, see the notice in "describe other income," below)</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-B-oth1" id="myDocMonthlyIncomeHousingExpense-B-oth1"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-CB-oth1" id="myDocMonthlyIncomeHousingExpense-CB-oth1"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-oth1" id="myDocMonthlyIncomeHousingExpense-oth1"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><div class="doc-input-label">Homeowner Assn. Dues</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-due-present" id="myDocMonthlyIncomeHousingExpense-due-present"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-due-proposed" id="myDocMonthlyIncomeHousingExpense-due-proposed"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-B-oth2" id="myDocMonthlyIncomeHousingExpense-B-oth2"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-CB-oth2" id="myDocMonthlyIncomeHousingExpense-CB-oth2"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-oth2" id="myDocMonthlyIncomeHousingExpense-oth2"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><div class="doc-input-label">Other:</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-oth-present" id="myDocMonthlyIncomeHousingExpense-oth-present"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-oth-proposed" id="myDocMonthlyIncomeHousingExpense-oth-proposed"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                  </tr>
+                  <tr><td><div class="doc-input-label-bold">Total</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-B-total" id="myDocMonthlyIncomeHousingExpense-B-total"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-CB-total" id="myDocMonthlyIncomeHousingExpense-CB-total"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-total" id="myDocMonthlyIncomeHousingExpense-total"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><div class="doc-input-label-bold">Total</div></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-total-present" id="myDocMonthlyIncomeHousingExpense-total-present"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                    <td><input type="text" name="myDocMonthlyIncomeHousingExpense-total-proposed" id="myDocMonthlyIncomeHousingExpense-total-proposed"
+                           class="field-style field-full align-left"
+                           placeholder="$" /></td>
+                  </tr>         
+                </table>        
+              </li>       
+              <li>
+            <input type="button" value="Save" id="myDocMonthlyIncomeHousingExpense-save" name="myDocMonthlyIncomeHousingExpense-save" class="doc-button" />
+            <input type="button" value="Sign" id="myDocMonthlyIncomeHousingExpense-sign" name="myDocMonthlyIncomeHousingExpense-sign" class="doc-button" />
+            <input type="button" value="Revoke" id="myDocMonthlyIncomeHousingExpense-revo" name="myDocMonthlyIncomeHousingExpense-revo" class="doc-button" />
+              </li>
+            </ul>
+          </form>
+        </div>
+        
+        <div id="myDocAssetsLiabilities" class="doc">
+          <form class="form-style">Borrower&#39;s Assets and Liabilities
+            <a class="button button_right icon expand" id="myDocAssetsLiabilities-expand"><span></span></a>
+            <a class="button button_right icon collapse" id="myDocAssetsLiabilities-collapse"><span></span></a>
+            <div class="accessinfo" id="myDocAssetsLiabilities-accessInfo"></div>
+            <a class="button button_right docaccess" id="myDocAssetsLiabilities-access-N"><span>N</span></a>
+            <a class="button button_right docaccess" id="myDocAssetsLiabilities-access-A"><span>A</span></a>
+            <a class="button button_right docaccess" id="myDocAssetsLiabilities-access-S"><span>S</span></a>
+            <a class="button button_right docaccess" id="myDocAssetsLiabilities-access-B"><span>B</span></a> 
+            <a class="button button_right docaccess" id="myDocAssetsLiabilities-access-L"><span>L</span></a>
+            <ul id="myDocAssetsLiabilities-form">
+              <li>
+            <table>
+              <tr><td><div class="doc-input-label-bold">ASSETS</div></td><td><div class="doc-input-label-bold">Cash or Market Value</div></td></tr>
+              <tr><td><div class="doc-input-label">Description</div><input type="text" name="myDocAssetsLiabilities-value" id="myDocAssetsLiabilities-value"
+                                                   class="field-style align-right"
+                                                   placeholder="" /></td><td rowspan="2"><input type="text" name="myDocAssetsLiabilities-value" id="myDocAssetsLiabilities-value"
+                                                                        class="field-style field-full align-left"
+                                                                        placeholder="$" /></td></tr>
+              <tr><td><div class="doc-input-label">Cash deposit toward purchase held by:</div><input type="text" name="myDocAssetsLiabilities-value" id="myDocAssetsLiabilities-value"
+                                                             class="field-style align-right"
+                                                             placeholder="" /></td></tr>
+            </table>
+              </li>
+              <li>
+                <div class="doc-input-label-bold">List checking and savings account below</div>
+              </li>
+              <li>
+                <div class="doc-input-label">Name and address of Bank, S&L, or Credit Union</div>           
+                <input type="text" name="myDocAssetsLiabilities-account1" id="myDocAssetsLiabilities-account1"
+                       class="field-style field-full align-left"
+                       placeholder="" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">Acct. No.</div>
+            <div class="doc-input-label doc-input-label-split-50">$</div>               
+                <input type="text" name="myDocAssetsLiabilities-account1-no" id="myDocAssetsLiabilities-account1-no"
+                       class="field-style field-split align-left"
+                       placeholder="" />
+            <input type="text" name="myDocAssetsLiabilities-account1-balance" id="myDocAssetsLiabilities-account1-balance"
+                       class="field-style field-split align-right"
+                       placeholder="" />
+              </li>
+              <li>
+                <div class="doc-input-label">Name and address of Bank, S&L, or Credit Union</div>           
+                <input type="text" name="myDocAssetsLiabilities-account2" id="myDocAssetsLiabilities-account2"
+                       class="field-style field-full align-left"
+                       placeholder="" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">Acct. No.</div>
+            <div class="doc-input-label doc-input-label-split-50">$</div>               
+                <input type="text" name="myDocAssetsLiabilities-account2-no" id="myDocAssetsLiabilities-account2-no"
+                       class="field-style field-split align-left"
+                       placeholder="" />
+            <input type="text" name="myDocAssetsLiabilities-account2-balance" id="myDocAssetsLiabilities-account2-balance"
+                       class="field-style field-split align-right"
+                       placeholder="" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">Stocks & Bonds (Company name/number & description</div>
+            <div class="doc-input-label doc-input-label-split-50">$</div>               
+                <input type="text" name="myDocAssetsLiabilities-stock" id="myDocAssetsLiabilities-stock"
+                       class="field-style field-split align-left"
+                       placeholder="" />
+            <input type="text" name="myDocAssetsLiabilities-stock-value" id="myDocAssetsLiabilities-stock-value"
+                       class="field-style field-split align-right"
+                       placeholder="" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">Life insurance net cash value:</div>
+            <div class="doc-input-label doc-input-label-split-50">Face amount:</div>                
+                <input type="text" name="myDocAssetsLiabilities-stock" id="myDocAssetsLiabilities-stock"
+                       class="field-style field-split align-left"
+                       placeholder="$" />
+            <input type="text" name="myDocAssetsLiabilities-stock-value" id="myDocAssetsLiabilities-stock-value"
+                       class="field-style field-split align-right"
+                       placeholder="$" />
+              </li>
+              <li></li>
+              <li>
+                <div class="doc-input-label-bold doc-input-label-split-50">Subtotal Liquid Assets</div>             
+            <input type="text" name="myDocAssetsLiabilities-subtotal-liquid" id="myDocAssetsLiabilities-subtotal-liquid"
+                       class="field-style field-split align-right"
+                       placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">Real estate owned (enter market value from schedule of real estate owned)</div>               
+            <input type="text" name="myDocAssetsLiabilities-re" id="myDocAssetsLiabilities-re"
+                       class="field-style field-split align-right"
+                       placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">Vested interest in retirement fund</div>              
+            <input type="text" name="myDocAssetsLiabilities-rf" id="myDocAssetsLiabilities-rf"
+                       class="field-style field-split align-right"
+                       placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">Net worth of business(es) owned (attach financial statement)</div>                
+            <input type="text" name="myDocAssetsLiabilities-biz" id="myDocAssetsLiabilities-biz"
+                       class="field-style field-split align-right"
+                       placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">Automobiles owned (make and year)</div>               
+            <input type="text" name="myDocAssetsLiabilities-auto" id="myDocAssetsLiabilities-auto"
+                       class="field-style field-split align-right"
+                       placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">Other Assets (itemize)</div>              
+            <input type="text" name="myDocAssetsLiabilities-oth" id="myDocAssetsLiabilities-oth"
+                       class="field-style field-split align-right"
+                       placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label-bold doc-input-label-split-50">Total Assets a.</div>                
+            <input type="text" name="myDocAssetsLiabilities-total-assets" id="myDocAssetsLiabilities-total-assets"
+                       class="field-style field-split align-right"
+                       placeholder="$" />
+              </li>
+              <li>
+            <div class="doc-input-label-bold doc-input-label-split-30">LIABILITIES</div>
+            <div class="doc-input-label-bold doc-input-label-split-30">Monthly Payment & Months Left to Pay</div>
+            <div class="doc-input-label-bold doc-input-label-split-30">Unpaid Balance</div>
+            <div class="doc-input-label">Name and address of Company</div>
+              </li>
+              <li>      
+                <input type="text" name="myDocAssetsLiabilities-liability1" id="myDocAssetsLiabilities-liability1"
+                       class="field-style field-full align-left"
+                       placeholder="" />
+            <div class="doc-input-label doc-input-label-split-30">Acct. No.</div>
+            <div class="doc-input-label doc-input-label-split-30">$ Payment/Months</div>
+            <div class="doc-input-label doc-input-label-split-30">$</div>           
+                <input type="text" name="myDocAssetsLiabilities-liability1-account" id="myDocAssetsLiabilities-liability1-account"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+            <input type="text" name="myDocAssetsLiabilities-liability1-monthlypay" id="myDocAssetsLiabilities-liability1-monthlypay"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+                <input type="text" name="myDocAssetsLiabilities-liability1-unpaid" id="myDocAssetsLiabilities-liability1-unpaid"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+              </li>
+              <li>
+                <div class="doc-input-label">Name and address of Company</div>
+              </li>
+              <li>      
+                <input type="text" name="myDocAssetsLiabilities-liability2" id="myDocAssetsLiabilities-liability2"
+                       class="field-style field-full align-left"
+                       placeholder="" />
+            <div class="doc-input-label doc-input-label-split-30">Acct. No.</div>
+            <div class="doc-input-label doc-input-label-split-30">$ Payment/Months</div>
+            <div class="doc-input-label doc-input-label-split-30">$</div>           
+                <input type="text" name="myDocAssetsLiabilities-liability2-account" id="myDocAssetsLiabilities-liability2-account"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+            <input type="text" name="myDocAssetsLiabilities-liability2-monthlypay" id="myDocAssetsLiabilities-liability2-monthlypay"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+                <input type="text" name="myDocAssetsLiabilities-liability2-unpaid" id="myDocAssetsLiabilities-liability2-unpaid"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-30">Alimony/Child Support/Separate Maintenance Payments Owed to:</div>                
+            <input type="text" name="myDocAssetsLiabilities-alimony-monthlypay" id="myDocAssetsLiabilities-alimony-monthlypay"
+                       class="field-style field-split-30"
+                       placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-30">Job Related Expense (child care, union dues etc.)</div>               
+            <input type="text" name="myDocAssetsLiabilities-job-monthlypay" id="myDocAssetsLiabilities-job-monthlypay"
+                       class="field-style field-split-30"
+                       placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label-bold doc-input-label-split-30">Total Monthly Payments</div>             
+            <input type="text" name="myDocAssetsLiabilities-total-monthlypay" id="myDocAssetsLiabilities-total-monthlypay"
+                       class="field-style field-split-30"
+                       placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label-bold doc-input-label-split-30">Net Worth (a minus b)</div>
+            <div class="doc-input-label-bold doc-input-label-split-30">Total Liabilities b.</div>
+              </li>
+              <li>
+            <input type="text" name="myDocAssetsLiabilities-nw" id="myDocAssetsLiabilities-nw"
+                       class="field-style field-split-30 align-left"
+                       placeholder="$" />
+            <input type="text" name="myDocAssetsLiabilities-total-liabilities" id="myDocAssetsLiabilities-total-liabilities"
+                       class="field-style field-split-30 align-left"
+                       placeholder="$" />
+              </li>
+              <li>
+            <input type="button" value="Save" id="myDocAssetsLiabilities-save" name="myDocAssetsLiabilities-save" class="doc-button" />
+            <input type="button" value="Sign" id="myDocAssetsLiabilities-sign" name="myDocAssetsLiabilities-sign" class="doc-button" />
+            <input type="button" value="Revoke" id="myDocAssetsLiabilities-revo" name="myDocAssetsLiabilities-revo" class="doc-button" />
+              </li>
+            </ul>
+          </form>
+        </div>
+        
+        <div id="myDocDetailsOfTransaction" class="doc">
+          <form class="form-style">Details of Mortgage Transaction
+            <a class="button button_right icon expand" id="myDocDetailsOfTransaction-expand"><span></span></a>
+            <a class="button button_right icon collapse" id="myDocDetailsOfTransaction-collapse"><span></span></a>
+            <div class="accessinfo" id="myDocDetailsOfTransaction-accessInfo"></div>
+            <a class="button button_right docaccess" id="myDocDetailsOfTransaction-access-N"><span>N</span></a>
+            <a class="button button_right docaccess" id="myDocDetailsOfTransaction-access-A"><span>A</span></a>
+            <a class="button button_right docaccess" id="myDocDetailsOfTransaction-access-S"><span>S</span></a>
+            <a class="button button_right docaccess" id="myDocDetailsOfTransaction-access-B"><span>B</span></a> 
+            <a class="button button_right docaccess" id="myDocDetailsOfTransaction-access-L"><span>L</span></a>
+            <ul id="myDocDetailsOfTransaction-form">
+                  
+                  <li>
+                <div class="doc-input-label doc-input-label-split-50">a. Purchase price</div>               
+            <input type="text" name="myDocDetailsOfTransaction-a" id="myDocDetailsOfTransaction-a"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">b. Alterations,improvements, repairs</div>                
+            <input type="text" name="myDocDetailsOfTransaction-b" id="myDocDetailsOfTransaction-b"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">c. Land (if acquired separately)</div>                
+            <input type="text" name="myDocDetailsOfTransaction-c" id="myDocDetailsOfTransaction-c"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">d. Refinance (incl. debts to be paid off)</div>               
+            <input type="text" name="myDocDetailsOfTransaction-d" id="myDocDetailsOfTransaction-d"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">e. Estimated prepaid items</div>              
+            <input type="text" name="myDocDetailsOfTransaction-e" id="myDocDetailsOfTransaction-e"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">f. Estimated closing costs</div>              
+            <input type="text" name="myDocDetailsOfTransaction-f" id="myDocDetailsOfTransaction-f"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">g. PMI, MIP, Funding Fee</div>                
+            <input type="text" name="myDocDetailsOfTransaction-g" id="myDocDetailsOfTransaction-g"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">h. Discount (if Borrower will pay)</div>              
+            <input type="text" name="myDocDetailsOfTransaction-h" id="myDocDetailsOfTransaction-h"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label-bold doc-input-label-split-50">i. Total costs (add items a through h)</div>             
+            <input type="text" name="myDocDetailsOfTransaction-i" id="myDocDetailsOfTransaction-i"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">j. Subordinate financing</div>                
+            <input type="text" name="myDocDetailsOfTransaction-j" id="myDocDetailsOfTransaction-j"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">k. Borrower's closing costs paid by Seller</div>              
+            <input type="text" name="myDocDetailsOfTransaction-k" id="myDocDetailsOfTransaction-k"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">l. Other Credits (explain) Application Deposit Earnest Money</div>                
+            <input type="text" name="myDocDetailsOfTransaction-l" id="myDocDetailsOfTransaction-l"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">m. Loan amount (exclude PMI,  MIP, Funding Fee financed)</div>                
+            <input type="text" name="myDocDetailsOfTransaction-m" id="myDocDetailsOfTransaction-m"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">n. PMI,MIP, Funding Fee financed</div>                
+            <input type="text" name="myDocDetailsOfTransaction-n" id="myDocDetailsOfTransaction-n"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">o. Loan amount (add m & n)</div>              
+            <input type="text" name="myDocDetailsOfTransaction-o" id="myDocDetailsOfTransaction-o"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              <li>
+                <div class="doc-input-label doc-input-label-split-50">p. Cash from/ to Borrower (subtract j, k, l & o from i)</div>             
+            <input type="text" name="myDocDetailsOfTransaction-p" id="myDocDetailsOfTransaction-p"
+                   class="field-style field-split align-right"
+                   placeholder="$" />
+              </li>
+              
+              <li>
+            <input type="button" value="Save" id="myDocDetailsOfTransaction-save" name="myDocDetailsOfTransaction-save" class="doc-button" />
+            <input type="button" value="Sign" id="myDocDetailsOfTransaction-sign" name="myDocDetailsOfTransaction-sign" class="doc-button" />
+            <input type="button" value="Revoke" id="myDocDetailsOfTransaction-revo" name="myDocDetailsOfTransaction-revo" class="doc-button" />
+              </li>
+            </ul>
+          </form>
+        </div>
+        
+        <div id="myDocForGovMonitoring" class="doc">
+          <form class="form-style">Information for Government Monitoring Purpose
+            <a class="button button_right icon expand" id="myDocForGovMonitoring-expand"><span></span></a>
+            <a class="button button_right icon collapse" id="myDocForGovMonitoring-collapse"><span></span></a>
+            <div class="accessinfo" id="myDocForGovMonitoring-accessInfo"></div>
+            <a class="button button_right docaccess" id="myDocForGovMonitoring-access-N"><span>N</span></a>
+            <a class="button button_right docaccess" id="myDocForGovMonitoring-access-A"><span>A</span></a>
+            <a class="button button_right docaccess" id="myDocForGovMonitoring-access-S"><span>S</span></a>
+            <a class="button button_right docaccess" id="myDocForGovMonitoring-access-B"><span>B</span></a> 
+            <a class="button button_right docaccess" id="myDocForGovMonitoring-access-L"><span>L</span></a>
+            <ul id="myDocForGovMonitoring-form">          
+              <li>
+            <div class="doc-input-label-bold">Borrower:</div>
+              </li>
+              <li>
+            <input type="checkbox" name="myDocForGovMonitoring-B-notfurnish" id="myDocForGovMonitoring-B-notfurnish" value="notfurnish" />
+            <div class="doc-input-label">I do not wish to furnish this information</div>
+              </li>
+              <li>
+                <div class="doc-input-label-bold">Ethnicity:</div>
+              </li>
+              <li>
+            <input type="checkbox" name="myDocForGovMonitoring-B-ethnicity" id="myDocForGovMonitoring-B-ethnicity" value="hl" />
+            <div class="doc-input-label">Hispanic or Latino</div>
+            <input type="checkbox" name="myDocForGovMonitoring-B-ethnicity" id="myDocForGovMonitoring-B-ethnicity" value="nothl" />
+            <div class="doc-input-label">Not Hispanic or Latino</div>
+              </li>
+              <li>
+                <div class="doc-input-label-bold">Race:</div>
+              </li>
+              <li>
+            <input type="checkbox" name="myDocForGovMonitoring-B-race" id="myDocForGovMonitoring-B-race" value="aian" />
+            <div class="doc-input-label">American Indian or Alaska Native</div>
+            <input type="checkbox" name="myDocForGovMonitoring-B-race" id="myDocForGovMonitoring-B-race" value="asia" />
+            <div class="doc-input-label">Asian</div>
+            <input type="checkbox" name="myDocForGovMonitoring-B-race" id="myDocForGovMonitoring-B-race" value="baa" />
+            <div class="doc-input-label">Black or African American</div>
+            <input type="checkbox" name="myDocForGovMonitoring-B-race" id="myDocForGovMonitoring-B-race" value="nhopi" />
+            <div class="doc-input-label">Native Hawaiian or Other Pacific Islander</div>
+            <input type="checkbox" name="myDocForGovMonitoring-B-race" id="myDocForGovMonitoring-B-race" value="white" />
+            <div class="doc-input-label">White</div>
+              </li>
+              <li>
+                <div class="doc-input-label-bold">Sex:</div>
+              </li>
+              <li>
+            <input type="checkbox" name="myDocForGovMonitoring-B-sex" id="myDocForGovMonitoring-B-sex" value="female" />
+            <div class="doc-input-label">Female</div>
+            <input type="checkbox" name="myDocForGovMonitoring-B-sex" id="myDocForGovMonitoring-B-sex" value="male" />
+            <div class="doc-input-label">Male</div>
+              </li>       
+              
+              <li>
+            <div class="doc-input-label-bold">Co-Borrower:</div>
+              </li>
+              <li>
+            <input type="checkbox" name="myDocForGovMonitoring-CB-notfurnish" id="myDocForGovMonitoring-CB-notfurnish" value="notfurnish" />
+            <div class="doc-input-label">I do not wish to furnish this information</div>
+              </li>
+              <li>
+                <div class="doc-input-label-bold">Ethnicity:</div>
+              </li>
+              <li>
+            <input type="checkbox" name="myDocForGovMonitoring-CB-ethnicity" id="myDocForGovMonitoring-CB-ethnicity" value="hl" />
+            <div class="doc-input-label">Hispanic or Latino</div>
+            <input type="checkbox" name="myDocForGovMonitoring-CB-ethnicity" id="myDocForGovMonitoring-CB-ethnicity" value="nothl" />
+            <div class="doc-input-label">Not Hispanic or Latino</div>
+              </li>
+              <li>
+                <div class="doc-input-label-bold">Race:</div>
+              </li>
+              <li>
+            <input type="checkbox" name="myDocForGovMonitoring-CB-race" id="myDocForGovMonitoring-CB-race" value="aian" />
+            <div class="doc-input-label">American Indian or Alaska Native</div>
+            <input type="checkbox" name="myDocForGovMonitoring-CB-race" id="myDocForGovMonitoring-CB-race" value="asia" />
+            <div class="doc-input-label">Asian</div>
+            <input type="checkbox" name="myDocForGovMonitoring-CB-race" id="myDocForGovMonitoring-CB-race" value="baa" />
+            <div class="doc-input-label">Black or African American</div>
+            <input type="checkbox" name="myDocForGovMonitoring-CB-race" id="myDocForGovMonitoring-CB-race" value="nhopi" />
+            <div class="doc-input-label">Native Hawaiian or Other Pacific Islander</div>
+            <input type="checkbox" name="myDocForGovMonitoring-CB-race" id="myDocForGovMonitoring-CB-race" value="white" />
+            <div class="doc-input-label">White</div>
+              </li>
+              <li>
+                <div class="doc-input-label-bold">Sex:</div>
+              </li>
+              <li>
+            <input type="checkbox" name="myDocForGovMonitoring-CB-sex" id="myDocForGovMonitoring-CB-sex" value="female" />
+            <div class="doc-input-label">Female</div>
+            <input type="checkbox" name="myDocForGovMonitoring-CB-sex" id="myDocForGovMonitoring-CB-sex" value="male" />
+            <div class="doc-input-label">Male</div>
+              </li>       
+              <li>
+                <div class="doc-input-label">To be Completed by Loan Originator:</div>
+              </li>       
+              <li>
+                <div class="doc-input-label">This information was provided:</div>
+              </li>       
+              <li>
+            <input type="checkbox" name="myDocForGovMonitoring-collection" id="myDocForGovMonitoring-collection" value="f2f" />
+            <div class="doc-input-label">In a face-to-face interview</div>
+            <input type="checkbox" name="myDocForGovMonitoring-collection" id="myDocForGovMonitoring-collection" value="faxmail" />
+            <div class="doc-input-label">By the applicant and submitted by fax or mail</div>
+              </li>       
+              <li>  
+            <input type="checkbox" name="myDocForGovMonitoring-collection" id="myDocForGovMonitoring-collection" value="tele" />
+            <div class="doc-input-label">In a telephone interview</div>         
+            <input type="checkbox" name="myDocForGovMonitoring-collection" id="myDocForGovMonitoring-collection" value="internet" />
+            <div class="doc-input-label">By the applicant and submitted via e-mail or the Internet</div>
+              </li>
+              <li>
+            <div class="doc-input-label-bold doc-input-label-split-30">Loan Originator's Name (print or type)</div>
+            <div class="doc-input-label-bold doc-input-label-split-30">Loan Originator Identifier</div>
+            <div class="doc-input-label-bold doc-input-label-split-30">Loan Originator's Phone Number (including area code)</div>           
+            <input type="text" name="myDocForGovMonitoring-loname" id="myDocForGovMonitoring-loname"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+            <input type="text" name="myDocForGovMonitoring-loid" id="myDocForGovMonitoring-loid"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+            <input type="text" name="myDocForGovMonitoring-lophone" id="myDocForGovMonitoring-lophone"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+              </li>
+              <li>
+            <div class="doc-input-label-bold doc-input-label-split-30">Loan Origination Company's Name</div>
+            <div class="doc-input-label-bold doc-input-label-split-30">Loan Origination Company Identifier</div>
+            <div class="doc-input-label-bold doc-input-label-split-30">Loan Origination Company's Address</div>         
+            <input type="text" name="myDocForGovMonitoring-locompany" id="myDocForGovMonitoring-locompany"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+            <input type="text" name="myDocForGovMonitoring-locompanyid" id="myDocForGovMonitoring-locompanyid"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+            <input type="text" name="myDocForGovMonitoring-locompanyaddr" id="myDocForGovMonitoring-locompanyaddr"
+                       class="field-style field-split-30 align-left"
+                       placeholder="" />
+              </li>      
+              <li>
+            <input type="button" value="Save" id="myDocForGovMonitoring-save" name="myDocForGovMonitoring-save" class="doc-button" />
+            <input type="button" value="Sign" id="myDocForGovMonitoring-sign" name="myDocForGovMonitoring-sign" class="doc-button" />
+            <input type="button" value="Revoke" id="myDocForGovMonitoring-revo" name="myDocForGovMonitoring-revo" class="doc-button" />
+              </li>
+            </ul>
+          </form>
+        </div>   
+        
+        <div id="myDocAcknowledgementAgreement" class="doc">
+          <form class="form-style">Borrower&#39;s Acknowledgement and Agreement
+            <a class="button button_right icon expand" id="myDocAcknowledgementAgreement-expand"><span></span></a>
+            <a class="button button_right icon collapse" id="myDocAcknowledgementAgreement-collapse"><span></span></a>
+            <div class="accessinfo" id="myDocAcknowledgementAgreement-accessInfo"></div>
+            <a class="button button_right docaccess" id="myDocAcknowledgementAgreement-access-N"><span>N</span></a>
+            <a class="button button_right docaccess" id="myDocAcknowledgementAgreement-access-A"><span>A</span></a>
+            <a class="button button_right docaccess" id="myDocAcknowledgementAgreement-access-S"><span>S</span></a>
+            <a class="button button_right docaccess" id="myDocAcknowledgementAgreement-access-B"><span>B</span></a> 
+            <a class="button button_right docaccess" id="myDocAcknowledgementAgreement-access-L"><span>L</span></a>
+            <ul id="myDocAcknowledgementAgreement-form">          
+              <li>
+            <div class="doc-input-label">Each of the under signed specifically represents to Lender and
+              to Lender's actual or potential agents, brokers, processors, attorneys, insurers, servicers, 
+              successors and assigns and agrees and acknowledges that: (1) the information provided in this 
+              application is true and correct as of the date set forth opposite my signature and that any 
+              intentional or negligent misrepresentation of this information contained in this application 
+              may result in civil liability, including monetary damages, to any person who may suffer any 
+              loss due to reliance upon any misrepresentation that I have made on this application, and/or 
+              in criminal penalties including, but not limited to, fine or imprisonment or both under the 
+              provisions of Title 18, United States Code, Sec. 1001, et seq.; (2) the loan requested pursuant 
+              to this application (the "Loan") will be secured by a mortgage or deed of trust on the property 
+              described in this application; (3) the property will not be used for any illegal or prohibited 
+              purpose or use; (4) all statements made in this application are made for the purpose of obtaining 
+              a residential mortgage loan; (5) the property will be occupied as indicated in this application;
+              (6) the Lender, its servicers, successors or assigns may retain the original and/or an electronic 
+              record of this application, whether or not the Loan is approved; (7) the Lender and its agents, 
+              brokers, insurers, servicers, successors, and assigns may continuously rely on the information 
+              contained in the application, and I am obligated to amend and/or supplement the information 
+              provided in this application if any of the material facts that I have represented herein should 
+              change prior to closing of the Loan; (8) in the event that my payments on the Loan become delinquent, 
+              the Lender, its servicers, successors or assigns may, in addition to any other rights and remedies 
+              that it may have relating to such delinquency, report my name and account information to one or more 
+              consumer reporting agencies; (9) ownership of the Loan and/or administration of the Loan account may 
+              be transferred with such notice as may be required by law; (10) neither Lender nor its agents, brokers, 
+              insurers, servicers, successors or assigns has made any representation or warranty, express or implied, 
+              to me regarding the property or the condition or value of the property; and (11) my transmission 
+              of this application as an "electronic record" containing my "electronic signature," as those terms are 
+              defined in applicable federal and/or state laws (excluding audio and video recordings), or my facsimile 
+              transmission of this application containing a facsimile of my signature, shall be as effective, 
+              enforceable and valid as if a paper version of this application were delivered containing my original written signature.</div>
+            <div class="doc-input-label">Acknowledgement. Each of the under signed hereby acknowledges that any owner 
+              of the Loan, its servicers, successors and assigns, may verify or reverify any information contained in this 
+              application or obtain any information or data relating to the Loan, for any legitimate business purpose 
+              through any source, including a source named in this application or a consumer reporting agency.</div>
+              </li> 
+              <li>
+            <input type="button" value="Sign" id="myDocAcknowledgementAgreement-sign" name="myDocAcknowledgementAgreement-sign" class="doc-button" />
+            <input type="button" value="Revoke" id="myDocAcknowledgementAgreement-revo" name="myDocAcknowledgementAgreement-revo" class="doc-button" />
+              </li>
+            </ul>
+          </form>
+        </div>
+        
+
+          </div>
+          <div class="footer">&copy; 2016, IBM</div>
+     </div>
+   </body>
+</html>

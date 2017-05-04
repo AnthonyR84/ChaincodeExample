@@ -1,14 +1,25 @@
 {
-   "chaincodeID":"mplbank",
+   "chaincodeID":"helloworld2",
    "channelID":"labchannel",
-   "chaincodeVersion":"1",
+   "chaincodeVersion":"1.0",
    "keyValueStore":"/tmp/fabric-client-kvs",
    "mspid":"BlockchainCoCMSP",
+   "caserver":{
+      "ca_url":"http://localhost:7054"
+   },
+   "orderer":{
+      "orderer_url":"grpc://172.30.0.2:7050"
+   },
    "peers":[
       {
-         "peer_url":"grpc://localhost:7051",
-         "event_url":"grpc://localhost:7053"
+         "peer_url":"grpc://172.30.0.5:7051",
+         "event_url":"grpc://172.30.0.5:7053"
+      }
+   ],
+   "users":[
+      {
+         "username":"admin",
+         "secret":"adminpw"
       }
    ]
-
 }
