@@ -2,19 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hello World 2</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Chaincode example">
+    <meta name="author" content="Anthony Roux">
+
+
+    <title>Chaincode example : helloworld2</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../node_modules/bootstrap/docs/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <link href="./style.css" rel="stylesheet">
+
+
 </head>
-
-
 <body>
-<div ng-app="">
+<div class="container-fluid">
 
-    <p>Input something in the input box:</p>
-    <p>Name: <input type="text" ng-model="name"></p>
-    <p ng-bind="name"></p>
+    <h1 class="page-header">Chaincode Example</h1>
+    <h2 class="sub-header">Chaincode</h2>
+    <div class="form-group">
+        <label for="sel1">Chaincode list:</label>
+        <select class="form-control" id="sel1">
+            <option>HelloWorld2</option>
+            <option>Mortgage</option>
+            <option>Connectathon</option>
+        </select>
+    </div>
+
+    <h2 class="sub-header">Function</h2>
+    <div class="form-group">
+        <label for="sel1">Function list:</label>
+        <select class="form-control" id="sel2" title="Function list">
+            <option>Init</option>
+            <option>Invoke</option>
+            <option>Query</option>
+        </select>
+    </div>
+
+    <div class="form-group-sm">
+        <label for="Arguments">Arguments</label>
+        <textarea class="form-control" rows="1" placeholder="Arguments" id="Arguments"></textarea>
+    </div>
+
+    <div>
+        <textarea class="pre-scrollable" rows="5" cols="100" placeholder="Results" id="Results" readonly></textarea>
+    </div>
+
 
 </div>
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </body>
 </html>
