@@ -3,7 +3,6 @@ let app = express();
 
 let bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
-//app.use(bodyParser.json());
 
 let path = require('path');
 let util = require('util');
@@ -40,7 +39,6 @@ function disconnectEventServers() {
     }
 }
 
-
 app.use(function(request, response, next) {
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -49,47 +47,9 @@ app.use(function(request, response, next) {
 
 app.post('/chaincode', function(req,res) {
 
-    let bod3=JSON.parse(JSON.stringify(req.body));
-    //console.log(bod3);
-
-    if (bod3.method === "deploy" ) {
-        logger.info('Executing Deploy');
-        nonce = utils.getNonce();
-        tx_id = chain.buildTransactionID(nonce, admin);
-
-        let request = {
-            chaincodePath: bod3.params.chaincodeID.path,
-            chaincodeId: config.chaincodeID,
-            fcn: bod3.params.ctorMsg.function,
-            args: bod3.params.ctorMsg.args ,
-            chainId: config.channelID,
-            txId: tx_id,
-            nonce: nonce,
-        };
-        chain.sendDeploymentProposal(request).then(
-            function(results) {
-                return helper.processProposal(tx_id,eventhub,chain, results, 'deploy');
-            }
-        ).then(
-            function(response) {
-                if (response.status === 'SUCCESS') {
-                    logger.info('Successfully sent deployment transaction to the orderer.');
-                    let answer;
-                    answer=JSON.parse( ' { "status" : "ok" }');
-                    res.send(answer);
-                } else {
-                    logger.error('Failed to order the deployment endorsement. Error code: ' + response.status);
-                }
-            }
-        ).catch(
-            function(err) {
-                disconnectEventServers();
-                logger.error(err.stack ? err.stack : err);
-            }
-        );
-
-
-    } else if (bod3.method === "query" ) {
+    let bod=JSON.parse(JSON.stringify(req.body));
+    
+    if (bod.method === "query" ) {
         nonce = utils.getNonce();
         tx_id = chain.buildTransactionID(nonce, admin);
 
@@ -99,8 +59,8 @@ app.post('/chaincode', function(req,res) {
             chaincodeVersion: config.chaincodeVersion,
             txId: tx_id,
             nonce: nonce,
-            fcn: bod3.function,
-            args: [bod3.name]
+            fcn: bod.function,
+            args: [bod.name]
         };
         // Query chaincode
         chain.queryByChaincode(request).then(
@@ -111,8 +71,6 @@ app.post('/chaincode', function(req,res) {
                 answer=JSON.parse( ' { "status" : "ok" , "message" : "" }');
                 answer.message=response_payloads.toString('utf8');
                 res.send(answer);
-
-                //res.end(response_payloads[0].toString('utf8'));
             }
         ).catch(
             function(err) {
@@ -120,10 +78,9 @@ app.post('/chaincode', function(req,res) {
             }
         );
 
-    }  else if (bod3.method === "invoke" ) {
+    }  else if (bod.method === "invoke" ) {
 
-
-
+        
         logger.info('Executing Invoke');
         nonce = utils.getNonce();
         tx_id = chain.buildTransactionID(nonce, admin);
@@ -132,13 +89,12 @@ app.post('/chaincode', function(req,res) {
             chainId: config.channelID,
             chaincodeId: config.chaincodeID,
             chaincodeVersion: config.chaincodeVersion,
-            fcn: bod3.function,
-            args: [bod3.name],
+            fcn: bod.function,
+            args: [bod.name],
             txId: tx_id,
             nonce: nonce
         };
         let answer;
-        console.log(request.fcn);
 
         chain.sendTransactionProposal(request).then(
             (results) => {
@@ -149,7 +105,6 @@ app.post('/chaincode', function(req,res) {
                 for(let i in proposalResponses) {
                     let one_good = false;
                     if (proposalResponses && proposalResponses[i].response && proposalResponses[i].response.status === 200) {
-                        //console.log(proposalResponses[i].response);
                         one_good = true;
                         logger.info('transaction proposal was good');
                     } else {
@@ -157,11 +112,10 @@ app.post('/chaincode', function(req,res) {
                     }
                     all_good = all_good & one_good;
                 }
-                //console.log(all_good);
+                
 
                 if (all_good) {
-                    //console.log("je suis là");
-                    answer=proposalResponses[0].response.payload.toString();
+                    answer=proposalResponses[0].response.payload.toString(); // store results returned by shim.success() in chaincode
                     logger.info(util.format('Successfully sent Proposal and received ProposalResponse: Status - %s, message - "%s", metadata - "%s", endorsement signature: %s', proposalResponses[0].response.status, proposalResponses[0].response.message, proposalResponses[0].response.payload, proposalResponses[0].endorsement.signature));
                     let request = {
                         proposalResponses: proposalResponses,
@@ -200,10 +154,6 @@ app.post('/chaincode', function(req,res) {
                     let sendPromise = chain.sendTransaction(request);
                     return Promise.all([sendPromise].concat(eventPromises))
                         .then((results) => {
-                            console.log(results[1]);
-                            console.log(request.proposalResponses[0].response.payload.toString());
-                            //console.log(results[0]);
-                            //console.log("je suis là");
                             logger.info('event promise all complete and testing complete');
                             return results[0]; // the first returned value is from the 'sendPromise' which is from the 'sendTransaction()' call
 
@@ -230,12 +180,11 @@ app.post('/chaincode', function(req,res) {
             (response) => {
 
                 if (response.status === 'SUCCESS') {
-                    logger.debug('Successfully sent transaction to the orderer.');
+                    logger.info('Successfully sent transaction to the orderer.');
                     let answer2;
                     answer2=JSON.parse( '{ "status" : "ok" , "txid" : "'+tx_id+'"}' );
-                    answer2.message= answer;
+                    answer2.message = answer;
                     res.send(answer2);
-                    //console.log('txid: '+tx_id);
                 } else {
                     disconnectEventServers();
                     logger.error('Failed to order the transaction. Error code: ' + response.status);
@@ -253,15 +202,12 @@ app.post('/chaincode', function(req,res) {
     }
 });
 
-
-
-
 function init() {
     chain = client.newChain(config.channelID);
     chain.addOrderer(new Orderer(config.orderer.orderer_url));
 
 //    for (let i = 0; i < config.peers.length; i++) {
-    //Prenons uniquement le premier peer pour le mortgage car la requete est envoyé à tous les peers
+    //Prenons uniquement le premier peer pour le mortgage car la requete est envoyée à tous les peers
     for (let i = 0; i < 1; i++) {
         chain.addPeer(new Peer(config.peers[i].peer_url));
         let eh = new EventHub();
@@ -277,7 +223,6 @@ function init() {
         return helper.getSubmitter(client);
     }).then((admi) => {
             admin=admi;
-            //console.log(admin);
         },
         (err) => {
             logger.info('Failed to get submitter \'admin\'');
