@@ -1,19 +1,19 @@
 {
    "chaincodeID":"helloworld2",
    "channelID":"labchannel",
-   "chaincodeVersion":"1.0",
+   "chaincodeVersion":"2.0",
    "keyValueStore":"/tmp/fabric-client-kvs",
    "mspid":"BlockchainCoCMSP",
    "caserver":{
       "ca_url":"http://localhost:7054"
    },
    "orderer":{
-      "orderer_url":"grpc://172.30.0.2:7050"
+      "orderer_url":"grpc://172.18.0.2:7050"
    },
    "peers":[
       {
-         "peer_url":"grpc://172.30.0.5:7051",
-         "event_url":"grpc://172.30.0.5:7053"
+         "peer_url":"grpc://172.18.0.3:7051",
+         "event_url":"grpc://172.18.0.3:7053"
       }
    ],
    "users":[

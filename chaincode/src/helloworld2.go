@@ -21,7 +21,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 		return shim.Error(err.Error())
 	}
 
-	return shim.Success(nil)
+	return shim.Success([]byte("hello world !"))
 }
 
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
@@ -44,12 +44,14 @@ func (t *SimpleChaincode) greetings(stub shim.ChaincodeStubInterface, args []str
 
 	user = args[0]
 	greetings = "hello " + args[0] + " !"
+	fmt.Println(greetings)
+	fmt.Println(user)
 	err = stub.PutState(user, []byte(greetings))
 	if err != nil {
 		return shim.Error(err.Error())
 	}
 
-	return shim.Success(nil)
+	return shim.Success([]byte(greetings))
 }
 
 func main() {
